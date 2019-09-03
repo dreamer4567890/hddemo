@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="home_page">首页</string>
+    <string name="business_page">业务</string>
+    <string name="mine_page">我的</string>
+    <string name="mine_none">我的页面暂无数据</string>
+    <string name="business_none">业务页面暂无数据</string>
+
+    <string name="music_page">音乐</string>
+    <string name="movie_page">影视</string>
+    <string name="sport_page">运动</string>
+
+    <string name="singer">歌手</string>
+</resources>
