@@ -2,11 +2,14 @@ package com.example.demo.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.view.Window;
 
 import com.example.demo.adapter.DemoFragmentAdapter;
+import com.example.demo.fragment.BusinessFragment;
 import com.example.demo.fragment.HomepageFragment;
 import com.example.demo.fragment.MineFragment;
 import com.example.demo.R;
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFragment = new ArrayList<>();
         mFragment.add(new HomepageFragment());
-        mFragment.add(new MineFragment());
+        mFragment.add(new BusinessFragment());
         mFragment.add(new MineFragment());
     }
 

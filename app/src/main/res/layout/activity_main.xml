@@ -21,6 +21,7 @@
         android:paddingBottom="10dp"
         app:tabSelectedTextColor="@color/tab_selected_text_color"
         app:tabTextColor="@color/tab_normal_text_color"
-        app:tabIndicatorColor="@android:color/black"/>
+        app:tabIndicatorColor="@android:color/black"
+        app:tabIndicatorHeight="0dp"/>
 
 </LinearLayout>

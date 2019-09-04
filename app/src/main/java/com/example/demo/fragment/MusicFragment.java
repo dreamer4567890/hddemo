@@ -170,7 +170,7 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
 
     @Override
     public void onLoaded() {
-        Toast.makeText(getActivity(),"Loaded all", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),"加载完毕", Toast.LENGTH_SHORT).show();
     }
 
 }
