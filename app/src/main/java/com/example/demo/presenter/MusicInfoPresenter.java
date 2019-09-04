@@ -1,9 +1,9 @@
-package com.example.demo.Presenter;
+package com.example.demo.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.demo.Bean.Music;
+import com.example.demo.bean.Music;
 import com.example.demo.mvp.BasePresenter;
 import com.example.demo.mvp.IBaseView;
 import com.google.gson.Gson;

@@ -1,4 +1,4 @@
-package com.example.demo.Fragment;
+package com.example.demo.fragment;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

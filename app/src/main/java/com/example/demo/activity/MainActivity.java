@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
 
-import com.example.demo.Adapter.DemoFragmentAdapter;
-import com.example.demo.Fragment.HomepageFragment;
-import com.example.demo.Fragment.MineFragment;
+import com.example.demo.adapter.DemoFragmentAdapter;
+import com.example.demo.fragment.HomepageFragment;
+import com.example.demo.fragment.MineFragment;
 import com.example.demo.R;
 
 import java.util.ArrayList;

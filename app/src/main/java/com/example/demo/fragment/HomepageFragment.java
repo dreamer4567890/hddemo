@@ -1,4 +1,4 @@
-package com.example.demo.Fragment;
+package com.example.demo.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.demo.Adapter.HomepageFragmentAdapter;
+import com.example.demo.adapter.HomepageFragmentAdapter;
 import com.example.demo.R;
 
 import java.util.ArrayList;

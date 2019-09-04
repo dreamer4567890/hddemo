@@ -1,4 +1,4 @@
-package com.example.demo.Adapter;
+package com.example.demo.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DemoFragmentAdapter extends FragmentPagerAdapter {
+public class HomepageFragmentAdapter extends FragmentPagerAdapter {
 
     private Context context;
     private List<Fragment> fragments;
@@ -18,7 +18,7 @@ public class DemoFragmentAdapter extends FragmentPagerAdapter {
     private FragmentManager mFragmentManager;
     private List<String> tags;
 
-    public DemoFragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public HomepageFragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
         this.tags = new ArrayList<>();
         this.mFragmentManager = fm;

@@ -1,4 +1,4 @@
-package com.example.demo.Fragment;
+package com.example.demo.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +12,11 @@ import com.example.demo.R;
 
 public class MineFragment extends Fragment {
 
-    private TextView tv_tag;
     private View view;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        tv_tag = getActivity().findViewById(R.id.tv_tag);
     }
 
     @Override

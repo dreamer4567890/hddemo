@@ -1,4 +1,4 @@
-package com.example.demo.Adapter;
+package com.example.demo.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.demo.Bean.Movie;
+import com.example.demo.bean.Movie;
 import com.example.demo.R;
 
 import java.util.List;
