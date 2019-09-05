@@ -33,7 +33,7 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
     private static final int REFRESH_LOAD = 0;//下拉刷新
     private static final int MORE_LOAD = 1;//加载更多
 
-    private Handler handler =new Handler(){
+    private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

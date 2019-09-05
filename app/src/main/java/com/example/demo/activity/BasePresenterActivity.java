@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.demo.mvp.BasePresenter;
 import com.example.demo.mvp.IView;
 
-public abstract class BasePresenterActivity<P extends BasePresenter<V>, V extends IView> extends AppCompatActivity {
+public abstract class BasePresenterActivity<P extends BasePresenter<V>, V extends IView> extends BaseActionBarActivity {
     protected P mPresenter;
 
     protected abstract P initPresenter();

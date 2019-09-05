@@ -22,7 +22,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
         TextView musicSinger;
         View itemView;
 
-        public ViewHolder(View view){
+        private ViewHolder(View view){
             super(view);
             musicImage = (ImageView) view.findViewById(R.id.iv_singer);
             musicSinger = (TextView) view.findViewById(R.id.tv_singer);

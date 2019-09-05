@@ -7,6 +7,10 @@
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
+    <include
+        layout="@layout/actionbar"
+        android:id="@+id/action_bar"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

@@ -22,7 +22,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         TextView movieName;
         View itemView;
 
-        public ViewHolder(View view){
+        private ViewHolder(View view){
             super(view);
             movieImage = (ImageView) view.findViewById(R.id.iv_movie);
             movieName = (TextView) view.findViewById(R.id.tv_movie);

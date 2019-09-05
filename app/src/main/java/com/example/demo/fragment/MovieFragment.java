@@ -66,7 +66,7 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
         super.onActivityCreated(savedInstanceState);
         mMovieList = new ArrayList<>();
         initData();
-        recycleView = (RefreshLoadMoreRecycleView) getActivity().findViewById(R.id.recyclerView);
+        recycleView = (RefreshLoadMoreRecycleView) getActivity().findViewById(R.id.recyclerView1);
         //LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),4);
         recycleView.setLayoutManager(layoutManager);
@@ -79,7 +79,7 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_music,container,false);
+        view = inflater.inflate(R.layout.fragment_movie,container,false);
         return view;
     }
 
