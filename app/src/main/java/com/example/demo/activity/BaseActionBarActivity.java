@@ -1,5 +1,8 @@
 package com.example.demo.activity;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +19,8 @@ public class BaseActionBarActivity extends AppCompatActivity {
     private ImageView ivBack;
     private ImageView ivSearch;
     private View actionBar;
+    private ComponentName launchComponentName;
+    private ComponentName componentName;
 
     private long exitTime = 0;
 
@@ -24,20 +29,36 @@ public class BaseActionBarActivity extends AppCompatActivity {
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivSearch = (ImageView) findViewById(R.id.iv_search);
+
+        PackageManager packageManager = this.getApplication().getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage(this.getPackageName());
+        launchComponentName = intent.getComponent();
+        componentName = this.getComponentName();
+        if(componentName.toString().equals(launchComponentName.toString())){
+
+        }else {
+
+        }
     }
 
-    public void setMyActionBar(String strTitle) {
+    public void setMyActionBar(String strTitle,boolean isSearch) {
         init();
         if (!TextUtils.isEmpty(strTitle)) {
             tvTitle.setText(strTitle);
         } else {
             tvTitle.setVisibility(View.GONE);
         }
-
+        if(!isSearch){
+            ivSearch.setVisibility(View.INVISIBLE);
+        }
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                exit();
+                if (componentName.toString().equals(launchComponentName.toString())){
+                    exit();
+                } else {
+                    finish();
+                }
             }
         });
         ivSearch.setOnClickListener(new View.OnClickListener() {

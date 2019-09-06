@@ -29,7 +29,7 @@ public class MainActivity extends BaseActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setMyActionBar("Demo");
+        setMyActionBar("Demo",true);
 
         initData();
         initView();
