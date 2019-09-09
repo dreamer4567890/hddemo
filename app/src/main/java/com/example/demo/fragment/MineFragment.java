@@ -7,19 +7,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.demo.R;
 import com.example.demo.activity.EditPersonalDataActivity;
-import com.example.demo.widget.RoundImageView;
+import com.example.demo.activity.TaskActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MineFragment extends Fragment {
+public class MineFragment extends Fragment implements View.OnClickListener {
 
     private View view;
     private CircleImageView ivHead;
     private TextView tvName;
+    private LinearLayout llTask;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -37,23 +39,32 @@ public class MineFragment extends Fragment {
     private void initView(){
         ivHead = getActivity().findViewById(R.id.iv_head);
         tvName = getActivity().findViewById(R.id.tv_name);
-        ivHead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditPersonalDataActivity.class);
-                startActivity(intent);
-            }
-        });
-        tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditPersonalDataActivity.class);
-                startActivity(intent);
-            }
-        });
+        llTask = getActivity().findViewById(R.id.ll_task);
+        ivHead.setOnClickListener(this);
+        tvName.setOnClickListener(this);
+        llTask.setOnClickListener(this);
     }
 
     private void initData(){
 
+    }
+
+    @Override
+    public void onClick(View view){
+        Intent intent = null;
+        switch (view.getId()){
+            case R.id.iv_head:
+                intent = new Intent(getActivity(), EditPersonalDataActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_name:
+                intent = new Intent(getActivity(), EditPersonalDataActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_task:
+                intent = new Intent(getActivity(),TaskActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }
