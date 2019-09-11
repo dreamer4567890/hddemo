@@ -16,7 +16,7 @@ public class MovieInfoPresenter extends BasePresenter<MovieInfoPresenter.View> {
 
     private static SharedPreferences sp;
 
-    public static void putMovieInfo(Context context, List<Movie> movieList){
+    public void putMovieInfo(Context context, List<Movie> movieList){
         if(sp == null){
             sp = context.getSharedPreferences("movie",Context.MODE_PRIVATE);
         }
@@ -27,7 +27,7 @@ public class MovieInfoPresenter extends BasePresenter<MovieInfoPresenter.View> {
         editor.commit();
     }
 
-    public static List<Movie> getMovieInfo(Context context){
+    public List<Movie> getMovieInfo(Context context){
         if(sp == null){
             sp = context.getSharedPreferences("movie",Context.MODE_PRIVATE);
         }
@@ -39,7 +39,7 @@ public class MovieInfoPresenter extends BasePresenter<MovieInfoPresenter.View> {
     }
 
     public interface View extends IBaseView {
-        void onMovieSucess();
+        void onMovieSuccess();
 
         void onMovieFailed(String errorMsg);
     }

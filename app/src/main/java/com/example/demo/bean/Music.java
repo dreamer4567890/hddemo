@@ -3,18 +3,18 @@ package com.example.demo.bean;
 public class Music {
 
     private String singer;
-    private int imageId;
+    private String url;
 
-    public Music(String singer,int imageId){
+    public Music(String singer,String url){
         this.singer = singer;
-        this.imageId = imageId;
+        this.url = url;
     }
 
     public String getSinger(){
         return singer;
     }
 
-    public int getImageId(){
-        return imageId;
+    public String getUrl(){
+        return url;
     }
 }

@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +31,8 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
     private static final int REFRESH_LOAD = 0;//下拉刷新
     private static final int MORE_LOAD = 1;//加载更多
 
+    private String wade = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567573570837&di=f2d0124ae1388d0e3ba3ae014f0b7140&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201703%2F25%2F20170325142932_FvPZy.jpeg";
+
     private Handler handler =new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -43,7 +44,7 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
                     if(mMovieList!=null){
                         mMovieList.clear();
                     }
-                    loadData();
+                    initData();
                     movieAdapter.notifyDataSetChanged();
                     break;
                 case MORE_LOAD:
@@ -65,10 +66,12 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mMovieList = new ArrayList<>();
+        dialog = new ProgressDialog(getContext());
         initData();
+        storage();
         recycleView = (RefreshLoadMoreRecycleView) getActivity().findViewById(R.id.recyclerView1);
         //LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),4);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),6);
         recycleView.setLayoutManager(layoutManager);
         movieAdapter = new MovieAdapter(mMovieList);
         recycleView.setAdapter(movieAdapter);
@@ -84,11 +87,10 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
     }
 
     private void initData(){
-        dialog = new ProgressDialog(getContext());
-        Movie mike = new Movie("Mike",R.mipmap.ic_launcher);
-        Movie john = new Movie("John",R.mipmap.ic_launcher);
-        Movie jason = new Movie("Jason",R.mipmap.ic_launcher);
-        for(int i = 0;i < 5; i++){
+        Movie mike = new Movie("Mike",wade);
+        Movie john = new Movie("John",wade);
+        Movie jason = new Movie("Jason",wade);
+        for(int i = 0;i < 9; i++){
             mMovieList.add(mike);
             mMovieList.add(john);
             mMovieList.add(jason);
@@ -98,7 +100,7 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
     }
 
     @Override
-    public void onMovieSucess(){
+    public void onMovieSuccess(){
         showToast("加载成功");
     }
 
@@ -126,9 +128,10 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    /**
-     * 加载数据
-     */
+    public void storage(){
+        mPresenter.putMovieInfo(getContext(),mMovieList);
+    }
+
     public void loadData(){
         mMovieList = mPresenter.getMovieInfo(getContext());
     }

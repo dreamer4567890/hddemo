@@ -16,7 +16,7 @@ public class MusicInfoPresenter extends BasePresenter<MusicInfoPresenter.View> {
 
     private static SharedPreferences sp;
 
-    public static void putMusicInfo(Context context, List<Music> musicList){
+    public void putMusicInfo(Context context, List<Music> musicList){
         if(sp == null){
             sp = context.getSharedPreferences("music",Context.MODE_PRIVATE);
         }
@@ -27,7 +27,7 @@ public class MusicInfoPresenter extends BasePresenter<MusicInfoPresenter.View> {
         editor.commit();
     }
 
-    public static List<Music> getMusicInfo(Context context){
+    public List<Music> getMusicInfo(Context context){
         if(sp == null){
             sp = context.getSharedPreferences("music",Context.MODE_PRIVATE);
         }
@@ -39,7 +39,7 @@ public class MusicInfoPresenter extends BasePresenter<MusicInfoPresenter.View> {
     }
 
     public interface View extends IBaseView {
-        void onMusicSucess();
+        void onMusicSuccess();
 
         void onMusicFailed(String errorMsg);
     }

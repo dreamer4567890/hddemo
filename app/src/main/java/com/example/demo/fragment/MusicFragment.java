@@ -33,7 +33,9 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
     private static final int REFRESH_LOAD = 0;//下拉刷新
     private static final int MORE_LOAD = 1;//加载更多
 
-    private Handler handler = new Handler(){
+    String wade = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567573436014&di=8b7e693380bb766caff8a8038eb37594&imgtype=0&src=http%3A%2F%2F02.imgmini.eastday.com%2Fmobile%2F20180613%2F1254485964e3efed7cf49afa51349d49_wmk.jpeg";
+
+    public Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -44,7 +46,7 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
                     if(mMusicList!=null){
                         mMusicList.clear();
                     }
-                    loadData();
+                    initData();
                     musicAdapter.notifyDataSetChanged();
                     break;
                 case MORE_LOAD:
@@ -66,7 +68,9 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mMusicList = new ArrayList<>();
+        dialog = new ProgressDialog(getContext());
         initData();
+        storage();
         recycleView = (RefreshLoadMoreRecycleView) getActivity().findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycleView.setLayoutManager(layoutManager);
@@ -84,22 +88,19 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
     }
 
     private void initData(){
-        dialog = new ProgressDialog(getContext());
-        Music mike = new Music("Mike",R.mipmap.ic_launcher);
-        Music john = new Music("John",R.mipmap.ic_launcher);
-        Music jason = new Music("Jason",R.mipmap.ic_launcher);
+        Music mike = new Music("Mike",wade);
+        Music john = new Music("John",wade);
+        Music jason = new Music("Jason",wade);
         for(int i = 0;i < 5; i++){
             mMusicList.add(mike);
             mMusicList.add(john);
             mMusicList.add(jason);
         }
 
-        mPresenter.putMusicInfo(getContext(),mMusicList);
-        //SharedPreferences.Editor editor = getContext().getSharedPreferences("data", Context.MODE_PRIVATE).edit();
     }
 
     @Override
-    public void onMusicSucess(){
+    public void onMusicSuccess(){
         showToast("加载成功");
     }
 
@@ -127,9 +128,10 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-     /**
-     * 加载数据
-     */
+    public void storage(){
+        mPresenter.putMusicInfo(getContext(),mMusicList);
+    }
+
     public void loadData(){
         mMusicList = mPresenter.getMusicInfo(getContext());
     }

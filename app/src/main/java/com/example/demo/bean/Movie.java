@@ -3,18 +3,18 @@ package com.example.demo.bean;
 public class Movie {
 
     private String name;
-    private int imageId;
+    private String url;
 
-    public Movie(String name,int imageId){
+    public Movie(String name,String url){
         this.name = name;
-        this.imageId = imageId;
+        this.url = url;
     }
 
     public String getName(){
         return name;
     }
 
-    public int getImageId(){
-        return imageId;
+    public String getUrl(){
+        return url;
     }
 }

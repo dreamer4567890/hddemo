@@ -1,5 +1,6 @@
 package com.example.demo.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.demo.bean.Movie;
 import com.example.demo.R;
 
@@ -21,12 +23,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         ImageView movieImage;
         TextView movieName;
         View itemView;
+        Context context;
 
         private ViewHolder(View view){
             super(view);
             movieImage = (ImageView) view.findViewById(R.id.iv_movie);
             movieName = (TextView) view.findViewById(R.id.tv_movie);
             itemView = view;
+            context = view.getContext();
         }
     }
 
@@ -51,8 +55,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(MovieAdapter.ViewHolder holder, int position){
         Movie movie = mMovieList.get(position);
-        holder.movieImage.setImageResource(movie.getImageId());
         holder.movieName.setText(movie.getName());
+        Glide.with(holder.context).load(movie.getUrl()).into(holder.movieImage);
     }
 
     @Override

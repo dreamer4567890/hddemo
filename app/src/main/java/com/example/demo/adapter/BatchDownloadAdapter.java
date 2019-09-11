@@ -4,8 +4,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,66 +22,58 @@ import android.widget.ImageView;
 
 import com.example.demo.R;
 
-@SuppressLint("NewApi")
-public class BatchDownloadAdapter extends ArrayAdapter {
+public class BatchDownloadAdapter extends ArrayAdapter<String> implements OnScrollListener {
 
-    private GridView mGridView;
-    //图片缓存类
-    private LruCache<String,Bitmap> mLruCache;
-    //记录所有正在下载或等待下载的任务
-    private HashSet mDownloadBitmapAsyncTaskHashSet;
-    //GridView中可见的第一张图片的下标
+    private Set<BitmapWorkerTask> taskCollection;
+
+    private LruCache<String, Bitmap> mMemoryCache;
+
+    private GridView mPhotoWall;
+
     private int mFirstVisibleItem;
-    //GridView中可见的图片的数量
+
     private int mVisibleItemCount;
-    //记录是否是第一次进入该界面
-    private boolean isFirstEnterThisActivity = true;
 
-    private String[] Urls;
+    private boolean isFirstEnter = true;
 
-    public BatchDownloadAdapter(Context context, int textViewResourceId,String[] objects, GridView gridView) {
+    private List<String> urls;
+
+    public BatchDownloadAdapter(Context context, int textViewResourceId, List<String> objects, GridView photoWall) {
         super(context, textViewResourceId, objects);
-
-        Urls = objects;
-        mGridView = gridView;
-        mGridView.setOnScrollListener(new ScrollListenerImpl());
-
-        mDownloadBitmapAsyncTaskHashSet = new HashSet();
-
+        urls = objects;
+        mPhotoWall = photoWall;
+        taskCollection = new HashSet<>();
         // 获取应用程序最大可用内存
         int maxMemory = (int) Runtime.getRuntime().maxMemory();
-        // 设置图片缓存大小为maxMemory的1/6
-        int cacheSize = maxMemory/6;
-
-        mLruCache = new LruCache<String,Bitmap>(cacheSize){
+        int cacheSize = maxMemory / 8;
+        // 设置图片缓存大小为程序最大可用内存的1/8
+        mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
             protected int sizeOf(String key, Bitmap bitmap) {
                 return bitmap.getByteCount();
             }
         };
-
+        mPhotoWall.setOnScrollListener(this);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String url = getItem(position).toString();
+        String url = getItem(position);
         View view;
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.item_batch_download, null);
         } else {
             view = convertView;
         }
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-        //为该ImageView设置一个Tag,防止图片错位
-        imageView.setTag(url);
-        //为该ImageView设置显示的图片
-        setImageForImageView(url, imageView);
+        final ImageView photo = (ImageView) view.findViewById(R.id.imageView);
+        // 给ImageView设置一个Tag，保证异步加载图片时不会乱序
+        photo.setTag(url);
+        setImageView(url, photo);
         return view;
     }
 
-
-    private void setImageForImageView(String imageUrl, ImageView imageView) {
-        Bitmap bitmap = getBitmapFromLruCache(imageUrl);
+    private void setImageView(String imageUrl, ImageView imageView) {
+        Bitmap bitmap = getBitmapFromMemoryCache(imageUrl);
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
         } else {
@@ -89,33 +81,49 @@ public class BatchDownloadAdapter extends ArrayAdapter {
         }
     }
 
-
-    private void addBitmapToLruCache(String key, Bitmap bitmap) {
-        if (getBitmapFromLruCache(key) == null) {
-            mLruCache.put(key, bitmap);
+    private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+        if (getBitmapFromMemoryCache(key) == null) {
+            mMemoryCache.put(key, bitmap);
         }
     }
 
-
-    private Bitmap getBitmapFromLruCache(String key) {
-        return (Bitmap) mLruCache.get(key);
+    private Bitmap getBitmapFromMemoryCache(String key) {
+        return mMemoryCache.get(key);
     }
 
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        // 仅当GridView静止时才去下载图片，GridView滑动时取消所有正在下载的任务
+        if (scrollState == SCROLL_STATE_IDLE) {
+            loadBitmaps(mFirstVisibleItem, mVisibleItemCount);
+        } else {
+            cancelAllTasks();
+        }
+    }
 
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        mFirstVisibleItem = firstVisibleItem;
+        mVisibleItemCount = visibleItemCount;
+        // 下载的任务应该由onScrollStateChanged里调用，但首次进入程序时onScrollStateChanged并不会调用，
+        // 因此在这里为首次进入程序开启下载任务。
+        if (isFirstEnter && visibleItemCount > 0) {
+            loadBitmaps(firstVisibleItem, visibleItemCount);
+            isFirstEnter = false;
+        }
+    }
 
-
-    private void loadBitmaps(int firstVisibleItem, int visibleItemCount, String[] Urls) {
+    private void loadBitmaps(int firstVisibleItem, int visibleItemCount) {
         try {
             for (int i = firstVisibleItem; i < firstVisibleItem + visibleItemCount; i++) {
-                String imageUrl = Urls[i];
-                Bitmap bitmap = getBitmapFromLruCache(imageUrl);
+                String imageUrl = urls.get(i);
+                Bitmap bitmap = getBitmapFromMemoryCache(imageUrl);
                 if (bitmap == null) {
-                    DownloadBitmapAsyncTask downloadBitmapAsyncTask = new DownloadBitmapAsyncTask();
-                    mDownloadBitmapAsyncTaskHashSet.add(downloadBitmapAsyncTask);
-                    downloadBitmapAsyncTask.execute(imageUrl);
+                    BitmapWorkerTask task = new BitmapWorkerTask();
+                    taskCollection.add(task);
+                    task.execute(imageUrl);
                 } else {
-                    //依据Tag找到对应的ImageView显示图片
-                    ImageView imageView = (ImageView) mGridView.findViewWithTag(imageUrl);
+                    ImageView imageView = (ImageView) mPhotoWall.findViewWithTag(imageUrl);
                     if (imageView != null && bitmap != null) {
                         imageView.setImageBitmap(bitmap);
                     }
@@ -126,51 +134,24 @@ public class BatchDownloadAdapter extends ArrayAdapter {
         }
     }
 
-
     public void cancelAllTasks() {
-        if (mDownloadBitmapAsyncTaskHashSet != null) {
-            for (Object task : mDownloadBitmapAsyncTaskHashSet) {
-                DownloadBitmapAsyncTask asyncTask = (DownloadBitmapAsyncTask) task;
-                asyncTask.cancel(false);
+        if (taskCollection != null) {
+            for (BitmapWorkerTask task : taskCollection) {
+                task.cancel(false);
             }
         }
     }
 
+    class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
 
-    private class ScrollListenerImpl implements OnScrollListener{
-
-        @Override
-        public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
-            mFirstVisibleItem = firstVisibleItem;
-            mVisibleItemCount = visibleItemCount;
-            if (isFirstEnterThisActivity && visibleItemCount > 0) {
-                loadBitmaps(firstVisibleItem, visibleItemCount, Urls);
-                isFirstEnterThisActivity = false;
-            }
-        }
-
-
-        @Override
-        public void onScrollStateChanged(AbsListView view, int scrollState) {
-            if (scrollState == SCROLL_STATE_IDLE) {
-                loadBitmaps(mFirstVisibleItem, mVisibleItemCount, Urls);
-            } else {
-                cancelAllTasks();
-            }
-        }
-
-    }
-
-
-    class DownloadBitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
         private String imageUrl;
+
         @Override
         protected Bitmap doInBackground(String... params) {
             imageUrl = params[0];
             Bitmap bitmap = downloadBitmap(params[0]);
             if (bitmap != null) {
-                //下载完后,将其缓存到LrcCache
-                addBitmapToLruCache(params[0], bitmap);
+                addBitmapToMemoryCache(params[0], bitmap);
             }
             return bitmap;
         }
@@ -178,35 +159,32 @@ public class BatchDownloadAdapter extends ArrayAdapter {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            //下载完成后,找到其对应的ImageView显示图片
-            ImageView imageView = (ImageView) mGridView.findViewWithTag(imageUrl);
+            ImageView imageView = (ImageView) mPhotoWall.findViewWithTag(imageUrl);
             if (imageView != null && bitmap != null) {
                 imageView.setImageBitmap(bitmap);
             }
-            mDownloadBitmapAsyncTaskHashSet.remove(this);
+            taskCollection.remove(this);
         }
-    }
 
-    // 获取Bitmap
-    private Bitmap downloadBitmap(String imageUrl) {
-        Bitmap bitmap = null;
-        HttpURLConnection httpURLConnection = null;
-        try {
-            URL url = new URL(imageUrl);
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setConnectTimeout(5 * 1000);
-            httpURLConnection.setReadTimeout(10 * 1000);
-            httpURLConnection.setDoInput(true);
-            httpURLConnection.setDoOutput(true);
-            bitmap = BitmapFactory.decodeStream(httpURLConnection.getInputStream());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (httpURLConnection != null) {
-                httpURLConnection.disconnect();
+        private Bitmap downloadBitmap(String imageUrl) {
+            Bitmap bitmap = null;
+            HttpURLConnection con = null;
+            try {
+                URL url = new URL(imageUrl);
+                con = (HttpURLConnection) url.openConnection();
+                con.setConnectTimeout(5 * 1000);
+                con.setReadTimeout(10 * 1000);
+                bitmap = BitmapFactory.decodeStream(con.getInputStream());
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (con != null) {
+                    con.disconnect();
+                }
             }
+            return bitmap;
         }
-        return bitmap;
+
     }
 
 }

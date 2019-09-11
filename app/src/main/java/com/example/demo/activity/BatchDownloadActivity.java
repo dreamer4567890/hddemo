@@ -6,11 +6,14 @@ import android.widget.GridView;
 import com.example.demo.R;
 import com.example.demo.adapter.BatchDownloadAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BatchDownloadActivity extends BaseActionBarActivity {
 
     private GridView gridView;
     private BatchDownloadAdapter mAdapt;
-    private String[] url;
+    private List<String> url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +31,15 @@ public class BatchDownloadActivity extends BaseActionBarActivity {
     }
 
     private void initData(){
-        url = new String[30];
-        for(int i = 0; i < url.length; i++){
-            url[i] = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567573436014&di=8b7e693380bb766caff8a8038eb37594&imgtype=0&src=http%3A%2F%2F02.imgmini.eastday.com%2Fmobile%2F20180613%2F1254485964e3efed7cf49afa51349d49_wmk.jpeg";
+        url = new ArrayList<>();
+        for(int i = 0; i < 30; i++){
+            url.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567573436013&di=c98946f3a4e8381ff4910bc57d0641f4&imgtype=0&src=http%3A%2F%2F07imgmini.eastday.com%2Fmobile%2F20190311%2F20190311065348_fe19ec86dc9d1551e2b1b12eae9cd8e2_2.jpeg");
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdapt.cancelAllTasks();
     }
 }
