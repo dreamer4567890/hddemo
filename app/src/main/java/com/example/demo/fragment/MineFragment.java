@@ -60,15 +60,21 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.iv_head:
             case R.id.tv_name:
                 intent = new Intent(getActivity(), EditPersonalDataActivity.class);
+                startActivityForResult(intent,1);
                 break;
             case R.id.ll_task:
                 intent = new Intent(getActivity(),TaskActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll_batch:
                 intent = new Intent(getActivity(), BatchDownloadActivity.class);
+                startActivity(intent);
             default:
                 break;
         }
-        startActivity(intent);
+    }
+
+    public void setTvName(String name) {
+        tvName.setText(name);
     }
 }

@@ -64,7 +64,11 @@ public class EditPersonalDataActivity extends BaseActionBarActivity{
         btName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent();
+                intent.putExtra("name",etName.getText().toString());
+                //intent.putExtra("head",ivHead.getTag().toString());
+                setResult(2,intent);
+                finish();
             }
         });
     }
