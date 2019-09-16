@@ -21,12 +21,14 @@
             android:background="@color/mine_item_background">
             <EditText
                 android:id="@+id/et_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/tab_selected_text_color"
                 android:background="@null"
                 android:textCursorDrawable="@null"
-                android:hint="请输入昵称"/>
+                android:hint="请输入昵称"
+                android:singleLine="true"
+                android:maxLength="8"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

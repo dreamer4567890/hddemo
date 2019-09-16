@@ -1,9 +1,11 @@
 package com.example.demo.activity;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +52,7 @@ public class EditPersonalDataActivity extends BaseActionBarActivity{
 
     private Dialog dialog;
     private View inflate;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +68,19 @@ public class EditPersonalDataActivity extends BaseActionBarActivity{
         btName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.putExtra("name",etName.getText().toString());
-                //intent.putExtra("head",ivHead.getTag().toString());
-                setResult(2,intent);
-                finish();
+                String nickname = etName.getText().toString();
+                if(!TextUtils.isEmpty(nickname)){
+                    SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                    editor.putString("nickname",nickname);
+                    editor.apply();
+
+                    Intent intent = new Intent();
+                    intent.putExtra("name",nickname);
+                    //intent.putExtra("head",ivHead.getTag().toString());
+                    setResult(2,intent);
+                    Toast.makeText(EditPersonalDataActivity.this,"保存成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
     }
@@ -78,6 +90,8 @@ public class EditPersonalDataActivity extends BaseActionBarActivity{
         etName = findViewById(R.id.et_name);
         btName = findViewById(R.id.bt_name);
         ivHead = findViewById(R.id.iv_head);
+        Intent intent = getIntent();
+        etName.setText(intent.getStringExtra("nickname"));
     }
 
     private void showCameraDialog(View view){

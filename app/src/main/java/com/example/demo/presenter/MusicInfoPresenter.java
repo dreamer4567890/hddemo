@@ -24,7 +24,7 @@ public class MusicInfoPresenter extends BasePresenter<MusicInfoPresenter.View> {
         Gson gson = new Gson();
         String json = gson.toJson(musicList);
         editor.putString("musicInfo",json);
-        editor.commit();
+        editor.apply();
     }
 
     public List<Music> getMusicInfo(Context context){

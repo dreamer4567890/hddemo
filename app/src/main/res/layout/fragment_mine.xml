@@ -28,7 +28,9 @@
             android:layout_marginLeft="20dp"
             android:textColor="@color/tab_selected_text_color"
             android:textSize="20sp"
-            android:text="请设置昵称"/>
+            android:hint="请设置昵称"
+            android:singleLine="true"
+            android:maxLength="8"/>
     </LinearLayout>
 
     <LinearLayout

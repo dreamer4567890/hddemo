@@ -8,8 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
-import android.view.Window;
-import android.widget.TextView;
 
 import com.example.demo.adapter.DemoFragmentAdapter;
 import com.example.demo.fragment.BusinessFragment;
@@ -27,8 +25,6 @@ public class MainActivity extends BaseActionBarActivity {
     private List<String> titel;
     private List<Fragment> mFragment;
     private DemoFragmentAdapter mAdapter;
-
-    private MineFragment mineFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,18 +74,6 @@ public class MainActivity extends BaseActionBarActivity {
                 super.onTabSelected(tab);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == 2) {
-            String name= data.getStringExtra("name");
-            if(name != null){
-                mineFragment.setTvName(name);
-                //setMyActionBar(name,true);
-            }
-        }
     }
 
 }

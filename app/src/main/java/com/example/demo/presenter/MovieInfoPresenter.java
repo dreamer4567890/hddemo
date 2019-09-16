@@ -24,7 +24,7 @@ public class MovieInfoPresenter extends BasePresenter<MovieInfoPresenter.View> {
         Gson gson = new Gson();
         String json = gson.toJson(movieList);
         editor.putString("movieInfo",json);
-        editor.commit();
+        editor.apply();
     }
 
     public List<Movie> getMovieInfo(Context context){
