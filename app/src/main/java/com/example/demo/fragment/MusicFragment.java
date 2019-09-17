@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.demo.activity.MainActivity;
 import com.example.demo.adapter.MusicAdapter;
 import com.example.demo.bean.Music;
+import com.example.demo.http.ExceptionHandle;
 import com.example.demo.presenter.MusicInfoPresenter;
 import com.example.demo.R;
 import com.example.demo.widget.RefreshLoadMoreRecycleView;
@@ -173,6 +174,21 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
     @Override
     public void onLoaded() {
         Toast.makeText(getActivity(),"加载完毕", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess(Object object) {
+
+    }
+
+    @Override
+    public void onFail(ExceptionHandle.ResponseException t) {
+
+    }
+
+    @Override
+    public void onCompleted() {
+
     }
 
 }

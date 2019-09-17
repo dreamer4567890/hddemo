@@ -23,6 +23,7 @@
         <activity android:name=".activity.EditPersonalDataActivity"/>
         <activity android:name=".activity.TaskActivity"/>
         <activity android:name=".activity.BatchDownloadActivity"/>
+        <activity android:name=".activity.RetrofitActivity"/>
     </application>
 
 </manifest>

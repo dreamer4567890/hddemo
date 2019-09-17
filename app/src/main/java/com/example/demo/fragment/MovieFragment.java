@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.demo.adapter.MovieAdapter;
 import com.example.demo.bean.Movie;
+import com.example.demo.http.ExceptionHandle;
 import com.example.demo.presenter.MovieInfoPresenter;
 import com.example.demo.R;
 import com.example.demo.widget.RefreshLoadMoreRecycleView;
@@ -174,4 +175,20 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
     public void onLoaded() {
         Toast.makeText(getActivity(),"加载完毕", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onSuccess(Object object) {
+
+    }
+
+    @Override
+    public void onFail(ExceptionHandle.ResponseException t) {
+
+    }
+
+    @Override
+    public void onCompleted() {
+
+    }
+
 }

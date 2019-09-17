@@ -1,20 +1,27 @@
 package com.example.demo.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.demo.http.SubscriptionManager;
 import com.example.demo.mvp.BasePresenter;
 import com.example.demo.mvp.IView;
 
 public abstract class BasePresenterActivity<P extends BasePresenter<V>, V extends IView> extends BaseActionBarActivity {
+
+    public Context context;
     protected P mPresenter;
 
     protected abstract P initPresenter();
 
+    protected abstract int getLayoutId();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //initData在基类中是oncreate之后，所以需要这里在oncreate之前初始化出来
+        context=this;
+        setContentView(getLayoutId());
         mPresenter = initPresenter();
         if (mPresenter != null) {
             mPresenter.onAttachView((V) this);
@@ -39,6 +46,7 @@ public abstract class BasePresenterActivity<P extends BasePresenter<V>, V extend
         if (mPresenter != null) {
             mPresenter.onDetachView();
             mPresenter = null;
+            SubscriptionManager.getInstance().cancelAll();
         }
         super.onDestroy();
     }

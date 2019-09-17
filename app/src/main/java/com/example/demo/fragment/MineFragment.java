@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.demo.R;
 import com.example.demo.activity.EditPersonalDataActivity;
 import com.example.demo.activity.BatchDownloadActivity;
+import com.example.demo.activity.RetrofitActivity;
 import com.example.demo.activity.TaskActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,6 +29,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private TextView tvName;
     private LinearLayout llTask;
     private LinearLayout llBatch;
+    private LinearLayout llRetrofit;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -47,10 +49,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         tvName = getActivity().findViewById(R.id.tv_name);
         llTask = getActivity().findViewById(R.id.ll_task);
         llBatch = getActivity().findViewById(R.id.ll_batch);
+        llRetrofit = getActivity().findViewById(R.id.ll_retrofit);
         ivHead.setOnClickListener(this);
         tvName.setOnClickListener(this);
         llTask.setOnClickListener(this);
         llBatch.setOnClickListener(this);
+        llRetrofit.setOnClickListener(this);
     }
 
     private void initData(){
@@ -76,6 +80,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.ll_batch:
                 intent = new Intent(getActivity(), BatchDownloadActivity.class);
+                startActivity(intent);
+            case R.id.ll_retrofit:
+                intent = new Intent(getActivity(), RetrofitActivity.class);
                 startActivity(intent);
             default:
                 break;
