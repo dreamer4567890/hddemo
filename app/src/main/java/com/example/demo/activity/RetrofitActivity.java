@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 
 public class RetrofitActivity extends BasePresenterActivity<RetrofitPresenter,IBaseView> implements IBaseView {
 
-    private String TAG="cgh";
     private TextView textView;
     private Button button;
     private ProgressDialog dialog;
@@ -33,25 +32,11 @@ public class RetrofitActivity extends BasePresenterActivity<RetrofitPresenter,IB
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initView();
-        initData();
-    }
-
-    public String beanToJson(Object bean) {
-        Gson gson = new Gson();
-        String jsonStr = gson.toJson(bean);
-        return jsonStr;
-    }
-
-    private void initView(){
+    protected void initData() {
+        setMyActionBar("Retrofit+Rxjava+okhttp3", false);
         dialog = new ProgressDialog(this);
         textView = findViewById(R.id.textView);
         button = findViewById(R.id.button);
-    }
-
-    public void initData() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,34 +50,6 @@ public class RetrofitActivity extends BasePresenterActivity<RetrofitPresenter,IB
         Log.d(TAG, "onSuccess: "+beanToJson(object));
         RetrofitBean retrofitBean= (RetrofitBean) object;
         textView.setText(retrofitBean.getData().getContent());
-    }
-
-    /**
-     * 失败回调
-     * @param t 异常
-     */
-    @Override
-    public void onFail(ExceptionHandle.ResponseException t) {
-        Log.d(TAG, t.message.toString());
-    }
-
-    @Override
-    public void onCompleted() {
-
-    }
-
-    @Override
-    public void showLoadingDialog() {
-        if (dialog!=null&&!dialog.isShowing()){
-            dialog.show();
-        }
-    }
-
-    @Override
-    public void hideLoadingDialog() {
-        if (dialog!=null&&dialog.isShowing()){
-            dialog.dismiss();
-        }
     }
 
     @Override

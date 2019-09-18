@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demo.R;
-import com.example.demo.widget.RoundImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +33,7 @@ import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class EditPersonalDataActivity extends BaseActionBarActivity{
+public class EditPersonalDataActivity extends BaseUiActivity {
 
     public static final int TAKE_PHOTO = 1;
     public static final int CROP_PHOTO = 2;
@@ -52,13 +51,21 @@ public class EditPersonalDataActivity extends BaseActionBarActivity{
 
     private Dialog dialog;
     private View inflate;
-    private AlertDialog alertDialog;
+    //private AlertDialog alertDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_personal_data);
-        initView();
+    protected int getLayoutId(){
+        return R.layout.activity_edit_personal_data;
+    }
+
+    @Override
+    protected void initData(){
+        setMyActionBar("个人资料",false);
+        etName = findViewById(R.id.et_name);
+        btName = findViewById(R.id.bt_name);
+        ivHead = findViewById(R.id.iv_head);
+        Intent intent = getIntent();
+        etName.setText(intent.getStringExtra("nickname"));
         ivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,15 +90,6 @@ public class EditPersonalDataActivity extends BaseActionBarActivity{
                 }
             }
         });
-    }
-
-    private void initView(){
-        setMyActionBar("个人资料",false);
-        etName = findViewById(R.id.et_name);
-        btName = findViewById(R.id.bt_name);
-        ivHead = findViewById(R.id.iv_head);
-        Intent intent = getIntent();
-        etName.setText(intent.getStringExtra("nickname"));
     }
 
     private void showCameraDialog(View view){
@@ -238,6 +236,11 @@ public class EditPersonalDataActivity extends BaseActionBarActivity{
         else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void showToast(String message){
+        Toast.makeText(EditPersonalDataActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
 }

@@ -64,30 +64,21 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mMovieList = new ArrayList<>();
-        dialog = new ProgressDialog(getContext());
-        initData();
-        storage();
-        recycleView = (RefreshLoadMoreRecycleView) getActivity().findViewById(R.id.recyclerView1);
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),6);
-        recycleView.setLayoutManager(layoutManager);
-        movieAdapter = new MovieAdapter(mMovieList);
-        recycleView.setAdapter(movieAdapter);
-        recycleView.setListener(this);
-        recycleView.setRefreshEnable(true);
-        recycleView.setLoadMoreEnable(true);
+    protected int getLayoutId(){
+        return R.layout.fragment_movie;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_movie,container,false);
-        return view;
+    protected void initView(View view){
+        mMovieList = new ArrayList<>();
+        dialog = new ProgressDialog(getContext());
+        recycleView =  view.findViewById(R.id.recyclerView1);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),6);
+        recycleView.setLayoutManager(layoutManager);
     }
 
-    private void initData(){
+    @Override
+    protected void initData(){
         Movie mike = new Movie("Mike",wade);
         Movie john = new Movie("John",wade);
         Movie jason = new Movie("Jason",wade);
@@ -96,8 +87,13 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
             mMovieList.add(john);
             mMovieList.add(jason);
         }
-
         mPresenter.putMovieInfo(getContext(),mMovieList);
+
+        movieAdapter = new MovieAdapter(mMovieList);
+        recycleView.setAdapter(movieAdapter);
+        recycleView.setListener(this);
+        recycleView.setRefreshEnable(true);
+        recycleView.setLoadMoreEnable(true);
     }
 
     @Override
@@ -108,29 +104,6 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
     @Override
     public void onMovieFailed(String errorMsg){
         showToast((TextUtils.isEmpty(errorMsg) ? "加载失败" : errorMsg));
-    }
-
-    @Override
-    public void showLoadingDialog() {
-        if (dialog!=null&&!dialog.isShowing()){
-            dialog.show();
-        }
-    }
-
-    @Override
-    public void hideLoadingDialog() {
-        if (dialog!=null&&dialog.isShowing()){
-            dialog.dismiss();
-        }
-    }
-
-    @Override
-    public void showToast(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-    }
-
-    public void storage(){
-        mPresenter.putMovieInfo(getContext(),mMovieList);
     }
 
     public void loadData(){
@@ -174,21 +147,6 @@ public class MovieFragment extends BasePresenterFragment<MovieInfoPresenter,Movi
     @Override
     public void onLoaded() {
         Toast.makeText(getActivity(),"加载完毕", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSuccess(Object object) {
-
-    }
-
-    @Override
-    public void onFail(ExceptionHandle.ResponseException t) {
-
-    }
-
-    @Override
-    public void onCompleted() {
-
     }
 
 }

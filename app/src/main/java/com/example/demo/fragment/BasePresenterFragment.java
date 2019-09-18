@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import com.example.demo.mvp.BasePresenter;
 import com.example.demo.mvp.IView;
 
-public abstract class BasePresenterFragment<P extends BasePresenter<V>, V extends IView> extends Fragment {
+public abstract class BasePresenterFragment<P extends BasePresenter<V>, V extends IView> extends BaseUiFragment {
 
     protected P mPresenter;
 

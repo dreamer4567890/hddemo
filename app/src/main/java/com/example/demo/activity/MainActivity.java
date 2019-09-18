@@ -1,13 +1,10 @@
 package com.example.demo.activity;
 
-import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.demo.adapter.DemoFragmentAdapter;
 import com.example.demo.fragment.BusinessFragment;
@@ -18,7 +15,7 @@ import com.example.demo.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActionBarActivity {
+public class MainActivity extends BaseUiActivity {
 
     private ViewPager viewpager;
     private TabLayout tab;
@@ -27,24 +24,14 @@ public class MainActivity extends BaseActionBarActivity {
     private DemoFragmentAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setMyActionBar("Demo",true);
-
-        initData();
-        initView();
-
-        mAdapter = new DemoFragmentAdapter(getSupportFragmentManager(),mFragment,titel);
-        viewpager.setAdapter(mAdapter);
-        tab.setupWithViewPager(viewpager);
-        mAdapter.updateFragments(mFragment);
-        viewpager.setOffscreenPageLimit(3);
-
-        initTab();
+    protected int getLayoutId(){
+        return R.layout.activity_main;
     }
 
-    private void initData(){
+    @Override
+    protected void initData(){
+        setMyActionBar("Demo",true);
+
         titel = new ArrayList<>();
         titel.add(getResources().getString(R.string.home_page));
         titel.add(getResources().getString(R.string.business_page));
@@ -54,12 +41,18 @@ public class MainActivity extends BaseActionBarActivity {
         mFragment.add(new HomepageFragment());
         mFragment.add(new BusinessFragment());
         mFragment.add(new MineFragment());
-    }
 
-    private void initView(){
         tab = findViewById(R.id.tab);
         //tab.setSelectedTabIndicatorHeight(0);
         viewpager = findViewById(R.id.viewpager);
+
+        mAdapter = new DemoFragmentAdapter(getSupportFragmentManager(),mFragment,titel);
+        viewpager.setAdapter(mAdapter);
+        tab.setupWithViewPager(viewpager);
+        mAdapter.updateFragments(mFragment);
+        viewpager.setOffscreenPageLimit(3);
+
+        initTab();
     }
 
     private void initTab(){
@@ -74,6 +67,11 @@ public class MainActivity extends BaseActionBarActivity {
                 super.onTabSelected(tab);
             }
         });
+    }
+
+    @Override
+    public void showToast(String message){
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
 }

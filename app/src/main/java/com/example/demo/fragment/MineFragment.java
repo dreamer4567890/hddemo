@@ -81,9 +81,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_batch:
                 intent = new Intent(getActivity(), BatchDownloadActivity.class);
                 startActivity(intent);
+                break;
             case R.id.ll_retrofit:
                 intent = new Intent(getActivity(), RetrofitActivity.class);
                 startActivity(intent);
+                break;
             default:
                 break;
         }

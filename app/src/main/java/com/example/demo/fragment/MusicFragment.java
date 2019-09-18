@@ -66,29 +66,21 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mMusicList = new ArrayList<>();
-        dialog = new ProgressDialog(getContext());
-        initData();
-        storage();
-        recycleView = (RefreshLoadMoreRecycleView) getActivity().findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recycleView.setLayoutManager(layoutManager);
-        musicAdapter = new MusicAdapter(mMusicList);
-        recycleView.setAdapter(musicAdapter);
-        recycleView.setListener(this);
-        recycleView.setRefreshEnable(true);
-        recycleView.setLoadMoreEnable(true);
+    protected int getLayoutId(){
+        return R.layout.fragment_music;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_music,container,false);
-        return view;
+    protected void initView(View view){
+        mMusicList = new ArrayList<>();
+        dialog = new ProgressDialog(getContext());
+        recycleView = view.findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recycleView.setLayoutManager(layoutManager);
     }
 
-    private void initData(){
+    @Override
+    protected void initData(){
         Music mike = new Music("Mike",wade);
         Music john = new Music("John",wade);
         Music jason = new Music("Jason",wade);
@@ -97,7 +89,12 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
             mMusicList.add(john);
             mMusicList.add(jason);
         }
-
+        mPresenter.putMusicInfo(getContext(),mMusicList);
+        musicAdapter = new MusicAdapter(mMusicList);
+        recycleView.setAdapter(musicAdapter);
+        recycleView.setListener(this);
+        recycleView.setRefreshEnable(true);
+        recycleView.setLoadMoreEnable(true);
     }
 
     @Override
@@ -108,29 +105,6 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
     @Override
     public void onMusicFailed(String errorMsg){
         showToast((TextUtils.isEmpty(errorMsg) ? "加载失败" : errorMsg));
-    }
-
-    @Override
-    public void showLoadingDialog() {
-        if (dialog!=null&&!dialog.isShowing()){
-            dialog.show();
-        }
-    }
-
-    @Override
-    public void hideLoadingDialog() {
-        if (dialog!=null&&dialog.isShowing()){
-            dialog.dismiss();
-        }
-    }
-
-    @Override
-    public void showToast(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-    }
-
-    public void storage(){
-        mPresenter.putMusicInfo(getContext(),mMusicList);
     }
 
     public void loadData(){
@@ -174,21 +148,6 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
     @Override
     public void onLoaded() {
         Toast.makeText(getActivity(),"加载完毕", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSuccess(Object object) {
-
-    }
-
-    @Override
-    public void onFail(ExceptionHandle.ResponseException t) {
-
-    }
-
-    @Override
-    public void onCompleted() {
-
     }
 
 }

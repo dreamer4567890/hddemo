@@ -18,7 +18,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class TaskActivity extends BaseActionBarActivity implements View.OnClickListener{
+public class TaskActivity extends BaseUiActivity implements View.OnClickListener{
 
     private ImageView ivTask;
     private Button btDownload;
@@ -30,14 +30,13 @@ public class TaskActivity extends BaseActionBarActivity implements View.OnClickL
     private MyAsyncTask myAsyncTask;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task);
-        initView();
+    protected int getLayoutId(){
+        return R.layout.activity_task;
     }
 
-    private void initView(){
-        setMyActionBar("Task",false);
+    @Override
+    protected void initData(){
+        setMyActionBar("AsyncTask",false);
         ivTask = findViewById(R.id.iv_task);
         btDownload = findViewById(R.id.bt_download);
         btCancel = findViewById(R.id.bt_cancel);
@@ -69,6 +68,8 @@ public class TaskActivity extends BaseActionBarActivity implements View.OnClickL
                     progressBar.setVisibility(View.INVISIBLE);
                     tvProgress.setVisibility(View.INVISIBLE);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -145,5 +146,10 @@ public class TaskActivity extends BaseActionBarActivity implements View.OnClickL
             tvProgress.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void showToast(String message){
+        Toast.makeText(TaskActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }
