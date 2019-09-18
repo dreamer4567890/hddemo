@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers;
 public class RetrofitModel {
 
     public void getTestInfo(String time, Observer<RetrofitBean> observer){
-        RetrofitManager.getInstance().apiservice().getData(time)
+        RetrofitManager.getInstance().service().getData(time)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(observer);

@@ -74,7 +74,7 @@ public class RetrofitManager {
     }
 
 
-    public IApiService apiservice(){return apiService;}
+    public IApiService service(){return apiService;}
 
 }
 
