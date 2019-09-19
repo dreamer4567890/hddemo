@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        layout="@layout/actionbar"
+        android:id="@+id/action_bar"/>
+
+    <Button
+        android:id="@+id/bt_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/action_bar"
+        app:layout_constraintBottom_toTopOf="@+id/bt_delete"
+        android:background="@drawable/round_gray"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="add"
+        android:textSize="20dp"
+        android:textColor="@color/tab_selected_text_color"/>
+    <Button
+        android:id="@+id/bt_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/bt_add"
+        app:layout_constraintBottom_toTopOf="@+id/bt_update"
+        android:background="@drawable/round_gray"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="delete"
+        android:textSize="20dp"
+        android:textColor="@color/tab_selected_text_color"/>
+    <Button
+        android:id="@+id/bt_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/bt_delete"
+        app:layout_constraintBottom_toTopOf="@+id/bt_query"
+        android:background="@drawable/round_gray"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="update"
+        android:textSize="20dp"
+        android:textColor="@color/tab_selected_text_color"/>
+    <Button
+        android:id="@+id/bt_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/bt_update"
+        android:background="@drawable/round_gray"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="query"
+        android:textSize="20dp"
+        android:textColor="@color/tab_selected_text_color"/>
+
+</android.support.constraint.ConstraintLayout>
