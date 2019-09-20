@@ -13,17 +13,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.demo.R;
+import com.example.demo.activity.ContactsActivity;
 import com.example.demo.activity.EditPersonalDataActivity;
 import com.example.demo.activity.BatchDownloadActivity;
 import com.example.demo.activity.RetrofitActivity;
 import com.example.demo.activity.SqlActivity;
 import com.example.demo.activity.TaskActivity;
+import com.example.demo.bean.Contacts;
+import com.example.demo.mvp.IBaseView;
+import com.example.demo.presenter.MinePresenter;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class MineFragment extends Fragment implements View.OnClickListener {
+public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView> implements IBaseView,View.OnClickListener {
 
     private View view;
     private CircleImageView ivHead;
@@ -32,11 +36,22 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private LinearLayout llBatch;
     private LinearLayout llRetrofit;
     private LinearLayout llSql;
+    private LinearLayout llContacts;
+
+    @Override
+    protected MinePresenter initPresenter(){
+        return new MinePresenter();
+    }
+
+    @Override
+    protected int getLayoutId(){
+        return R.layout.fragment_mine;
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initView();
+        initView(view);
         initData();
     }
 
@@ -46,22 +61,26 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void initView(){
-        ivHead = getActivity().findViewById(R.id.iv_head);
-        tvName = getActivity().findViewById(R.id.tv_name);
-        llTask = getActivity().findViewById(R.id.ll_task);
-        llBatch = getActivity().findViewById(R.id.ll_batch);
-        llRetrofit = getActivity().findViewById(R.id.ll_retrofit);
-        llSql = getActivity().findViewById(R.id.ll_sql);
+    //@Override
+    protected void initView(View view){
+        ivHead = view.findViewById(R.id.iv_head);
+        tvName = view.findViewById(R.id.tv_name);
+        llTask = view.findViewById(R.id.ll_task);
+        llBatch = view.findViewById(R.id.ll_batch);
+        llRetrofit = view.findViewById(R.id.ll_retrofit);
+        llSql = view.findViewById(R.id.ll_sql);
+        llContacts = view.findViewById(R.id.ll_contacts);
         ivHead.setOnClickListener(this);
         tvName.setOnClickListener(this);
         llTask.setOnClickListener(this);
         llBatch.setOnClickListener(this);
         llRetrofit.setOnClickListener(this);
         llSql.setOnClickListener(this);
+        llContacts.setOnClickListener(this);
     }
 
-    private void initData(){
+    //@Override
+    protected void initData(){
         SharedPreferences pref = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         if (!TextUtils.isEmpty(pref.getString("nickname",""))){
             tvName.setText(pref.getString("nickname",""));
@@ -93,6 +112,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_sql:
                 intent = new Intent(getActivity(), SqlActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.ll_contacts:
+                intent = new Intent(getActivity(), ContactsActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }

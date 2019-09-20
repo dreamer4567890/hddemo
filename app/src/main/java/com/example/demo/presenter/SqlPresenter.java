@@ -14,18 +14,21 @@ public class SqlPresenter extends BasePresenter<IBaseView> {
     public void insertData(SQLiteDatabase sqLiteDatabase){
         ContentValues values = new ContentValues();
 
+        values.put("id",1);
         values.put("name","第一行代码");
         values.put("author","郭霖");
         values.put("price",100);
         sqLiteDatabase.insert("book",null,values);
         values.clear();
 
+        values.put("id",2);
         values.put("name","Java从入门到放弃");
         values.put("author","Tony");
         values.put("price",80);
         sqLiteDatabase.insert("book",null,values);
         values.clear();
 
+        values.put("id",3);
         values.put("name","Android从入门到放弃");
         values.put("author","DW");
         values.put("price",50);
@@ -38,22 +41,24 @@ public class SqlPresenter extends BasePresenter<IBaseView> {
 
     public void updateData(SQLiteDatabase sqLiteDatabase){
         ContentValues values = new ContentValues();
-        values.put("price",30);
+        values.put("price",150);
         sqLiteDatabase.update("book",values,"name=?",new String[]{"Android从入门到放弃"});
     }
 
     public void queryData(SQLiteDatabase sqLiteDatabase){
         Cursor cursor = sqLiteDatabase.query("book",null,null,null,null,null,null);
         if(cursor.moveToFirst()){
-            while (cursor.moveToNext()){
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex("id"));
                 String name = cursor.getString(cursor.getColumnIndex("name"));
                 String author = cursor.getString(cursor.getColumnIndex("author"));
                 double price = cursor.getDouble(cursor.getColumnIndex("price"));
 
+                Log.d("SqlActivity","编号:" + id);
                 Log.d("SqlActivity","书名:" + name);
                 Log.d("SqlActivity","作者:" + author);
                 Log.d("SqlActivity","价格:" + price);
-            }
+            }while (cursor.moveToNext());
         }
         cursor.close();
     }

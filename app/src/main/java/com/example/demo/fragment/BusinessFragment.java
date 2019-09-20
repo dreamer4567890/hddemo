@@ -147,6 +147,8 @@ public class BusinessFragment extends Fragment implements View.OnClickListener {
             case R.id.textView2:
                 Toast.makeText(getContext(),"敬请期待",Toast.LENGTH_SHORT).show();
                 break;
+            default:
+                break;
         }
     }
 

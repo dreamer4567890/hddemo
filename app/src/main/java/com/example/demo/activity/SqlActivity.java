@@ -9,9 +9,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.demo.R;
+import com.example.demo.mvp.IBaseView;
+import com.example.demo.presenter.SqlPresenter;
 import com.example.demo.sql.MyDatabase;
 
-public class SqlActivity extends BaseUiActivity implements View.OnClickListener {
+public class SqlActivity extends BasePresenterActivity<SqlPresenter, IBaseView> implements IBaseView, View.OnClickListener {
 
     private Button btAdd;
     private Button btDelete;
@@ -19,6 +21,11 @@ public class SqlActivity extends BaseUiActivity implements View.OnClickListener 
     private Button btQuery;
     private MyDatabase myDatabase;
     private SQLiteDatabase sqLiteDatabase;
+
+    @Override
+    protected SqlPresenter initPresenter(){
+        return new SqlPresenter();
+    }
 
     @Override
     protected int getLayoutId(){
@@ -44,20 +51,23 @@ public class SqlActivity extends BaseUiActivity implements View.OnClickListener 
     public void onClick(View view){
         switch (view.getId()){
             case R.id.bt_add:
+                mPresenter.insertData(sqLiteDatabase);
+                showToast("insert");
                 break;
             case R.id.bt_delete:
+                mPresenter.deleteData(sqLiteDatabase);
+                showToast("delete");
                 break;
             case R.id.bt_update:
+                mPresenter.updateData(sqLiteDatabase);
+                showToast("update");
                 break;
             case R.id.bt_query:
+                mPresenter.queryData(sqLiteDatabase);
+                showToast("query");
                 break;
             default:
                 break;
         }
-    }
-
-    @Override
-    public void showToast(String message){
-        Toast.makeText(SqlActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }

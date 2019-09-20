@@ -147,9 +147,4 @@ public class TaskActivity extends BaseUiActivity implements View.OnClickListener
             progressBar.setVisibility(View.INVISIBLE);
         }
     }
-
-    @Override
-    public void showToast(String message){
-        Toast.makeText(TaskActivity.this, message, Toast.LENGTH_LONG).show();
-    }
 }

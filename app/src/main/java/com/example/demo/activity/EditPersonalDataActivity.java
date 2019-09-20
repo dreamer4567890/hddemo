@@ -238,9 +238,4 @@ public class EditPersonalDataActivity extends BaseUiActivity {
         }
     }
 
-    @Override
-    public void showToast(String message){
-        Toast.makeText(EditPersonalDataActivity.this, message, Toast.LENGTH_LONG).show();
-    }
-
 }

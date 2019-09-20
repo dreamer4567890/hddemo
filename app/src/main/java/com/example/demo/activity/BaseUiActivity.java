@@ -52,19 +52,14 @@ public abstract class BaseUiActivity extends BaseActivity implements IBaseView {
     private void init() {
         dialog = new ProgressDialog(this);
         actionBar = findViewById(R.id.action_bar);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        ivBack = (ImageView) findViewById(R.id.iv_back);
-        ivSearch = (ImageView) findViewById(R.id.iv_search);
+        tvTitle = findViewById(R.id.tv_title);
+        ivBack = findViewById(R.id.iv_back);
+        ivSearch = findViewById(R.id.iv_search);
 
         PackageManager packageManager = this.getApplication().getPackageManager();
         Intent intent = packageManager.getLaunchIntentForPackage(this.getPackageName());
         launchComponentName = intent.getComponent();
         componentName = this.getComponentName();
-        if(componentName.toString().equals(launchComponentName.toString())){
-
-        }else {
-
-        }
     }
 
     public void setMyActionBar(String strTitle,boolean isSearch) {
@@ -89,7 +84,7 @@ public abstract class BaseUiActivity extends BaseActivity implements IBaseView {
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(BaseUiActivity.this,"搜索功能暂未开放",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"搜索功能暂未开放",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -123,6 +118,11 @@ public abstract class BaseUiActivity extends BaseActivity implements IBaseView {
         if (dialog!=null&&dialog.isShowing()){
             dialog.dismiss();
         }
+    }
+
+    @Override
+    public void showToast(String message){
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +27,7 @@
         <activity android:name=".activity.BatchDownloadActivity"/>
         <activity android:name=".activity.RetrofitActivity"/>
         <activity android:name=".activity.SqlActivity"/>
+        <activity android:name=".activity.ContactsActivity"/>
     </application>
 
 </manifest>

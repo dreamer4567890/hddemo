@@ -68,10 +68,4 @@ public class MainActivity extends BaseUiActivity {
             }
         });
     }
-
-    @Override
-    public void showToast(String message){
-        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-    }
-
 }

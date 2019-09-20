@@ -38,9 +38,4 @@ public class BatchDownloadActivity extends BaseUiActivity {
         super.onDestroy();
         mAdapt.cancelAllTasks();
     }
-
-    @Override
-    public void showToast(String message){
-        Toast.makeText(BatchDownloadActivity.this, message, Toast.LENGTH_LONG).show();
-    }
 }

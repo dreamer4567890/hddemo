@@ -58,7 +58,7 @@ public class HomepageFragment extends Fragment {
     }
 
     private void initView(){
-        tab = getActivity().findViewById(R.id.tab);
+        tab = getActivity().findViewById(R.id.tab1);
         //tab.setSelectedTabIndicatorHeight(0);
         viewpager = getActivity().findViewById(R.id.viewpager1);
     }

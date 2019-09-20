@@ -52,8 +52,4 @@ public class RetrofitActivity extends BasePresenterActivity<RetrofitPresenter,IB
         textView.setText(retrofitBean.getData().getContent());
     }
 
-    @Override
-    public void showToast(String message){
-        Toast.makeText(RetrofitActivity.this, message, Toast.LENGTH_LONG).show();
-    }
 }
