@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.example.demo.R;
 import com.example.demo.adapter.ClassifyAdapter;
 import com.example.demo.bean.Classify;
+import com.example.demo.mvp.IBaseView;
+import com.example.demo.presenter.BusinessPresenter;
 import com.example.demo.widget.GlideImageLoader;
 import com.example.demo.widget.RoundImageView;
 import com.youth.banner.Banner;
@@ -25,7 +27,7 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusinessFragment extends Fragment implements View.OnClickListener {
+public class BusinessFragment extends BasePresenterFragment<BusinessPresenter, IBaseView> implements View.OnClickListener {
 
     private Banner banner;
     private View view;
@@ -47,13 +49,23 @@ public class BusinessFragment extends Fragment implements View.OnClickListener {
     private ClassifyAdapter classifyAdapter;
 
     @Override
+    protected BusinessPresenter initPresenter(){
+        return new BusinessPresenter();
+    }
+
+    @Override
+    protected int getLayoutId(){
+        return R.layout.fragment_business;
+    }
+
+
+    /*@Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
         initBanner();
         initData();
 
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerView2);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -65,28 +77,30 @@ public class BusinessFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_business,container,false);
         return view;
-    }
+    }*/
 
-    private void initView(){
-        banner = getActivity().findViewById(R.id.banner);
+    @Override
+    protected void initView(View view){
+        banner = view.findViewById(R.id.banner);
         mList = new ArrayList<>();
         mTitle = new ArrayList<>();
         mClassifyList = new ArrayList<>();
-        linearLayout1 = getActivity().findViewById(R.id.linearLayout1);
-        linearLayout2 = getActivity().findViewById(R.id.linearLayout2);
-        linearLayout3 = getActivity().findViewById(R.id.linearLayout3);
-        roundImageView1 = getActivity().findViewById(R.id.roundImageView1);
-        roundImageView2 = getActivity().findViewById(R.id.roundImageView2);
-        roundImageView3 = getActivity().findViewById(R.id.roundImageView3);
-        textView2 = getActivity().findViewById(R.id.textView2);
-        textView3 = getActivity().findViewById(R.id.textView3);
-        textView4 = getActivity().findViewById(R.id.textView4);
-        textView5 = getActivity().findViewById(R.id.textView5);
-        recyclerView = getActivity().findViewById(R.id.recyclerView);
+        linearLayout1 = view.findViewById(R.id.linearLayout1);
+        linearLayout2 = view.findViewById(R.id.linearLayout2);
+        linearLayout3 = view.findViewById(R.id.linearLayout3);
+        roundImageView1 = view.findViewById(R.id.roundImageView1);
+        roundImageView2 = view.findViewById(R.id.roundImageView2);
+        roundImageView3 = view.findViewById(R.id.roundImageView3);
+        textView2 = view.findViewById(R.id.textView2);
+        textView3 = view.findViewById(R.id.textView3);
+        textView4 = view.findViewById(R.id.textView4);
+        textView5 = view.findViewById(R.id.textView5);
+        recyclerView = view.findViewById(R.id.recyclerView2);
         linearLayout1.setOnClickListener(this);
         linearLayout2.setOnClickListener(this);
         linearLayout3.setOnClickListener(this);
         textView2.setOnClickListener(this);
+        initBanner();
     }
 
     private void initBanner(){
@@ -116,7 +130,8 @@ public class BusinessFragment extends Fragment implements View.OnClickListener {
         banner.start();
     }
 
-    private void initData(){
+    @Override
+    protected void initData(){
         roundImageView1.setImageResource(R.mipmap.ic_launcher);
         roundImageView2.setImageResource(R.mipmap.ic_launcher);
         roundImageView3.setImageResource(R.mipmap.ic_launcher);
@@ -126,10 +141,16 @@ public class BusinessFragment extends Fragment implements View.OnClickListener {
 
         Classify movie = new Classify("movie");
         Classify comic = new Classify("comic");
-        for(int i=0;i<3;i++){
+        for(int i = 0; i < 3; i++){
             mClassifyList.add(movie);
             mClassifyList.add(comic);
         }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        classifyAdapter = new ClassifyAdapter(mClassifyList);
+        recyclerView.setAdapter(classifyAdapter);
     }
 
     @Override

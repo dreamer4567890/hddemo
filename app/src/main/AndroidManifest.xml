@@ -28,6 +28,7 @@
         <activity android:name=".activity.RetrofitActivity"/>
         <activity android:name=".activity.SqlActivity"/>
         <activity android:name=".activity.ContactsActivity"/>
+        <activity android:name=".activity.GreenDaoActivity"/>
     </application>
 
 </manifest>

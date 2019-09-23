@@ -16,7 +16,7 @@ import com.example.demo.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomepageFragment extends Fragment {
+public class HomepageFragment extends BaseUiFragment {
 
     private ViewPager viewpager;
     private TabLayout tab;
@@ -26,6 +26,11 @@ public class HomepageFragment extends Fragment {
     private HomepageFragmentAdapter mAdapter;
 
     @Override
+    protected int getLayoutId(){
+        return R.layout.fragment_homepage;
+    }
+
+    /*@Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
@@ -43,9 +48,10 @@ public class HomepageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepage,container,false);
         return view;
-    }
+    }*/
 
-    private void initData(){
+    @Override
+    protected void initData(){
         titel = new ArrayList<>();
         titel.add(getResources().getString(R.string.music_page));
         titel.add(getResources().getString(R.string.movie_page));
@@ -55,12 +61,21 @@ public class HomepageFragment extends Fragment {
         mFragment.add(new MusicFragment());
         mFragment.add(new MovieFragment());
         //mFragment.add(new MovieFragment());
+
+        initTab();
+
+        mAdapter = new HomepageFragmentAdapter(getChildFragmentManager(),mFragment,titel);
+        viewpager.setAdapter(mAdapter);
+        tab.setupWithViewPager(viewpager);
+        mAdapter.updateFragments(mFragment);
+        viewpager.setOffscreenPageLimit(2);
     }
 
-    private void initView(){
-        tab = getActivity().findViewById(R.id.tab1);
+    @Override
+    protected void initView(View view){
+        tab = view.findViewById(R.id.tab1);
         //tab.setSelectedTabIndicatorHeight(0);
-        viewpager = getActivity().findViewById(R.id.viewpager1);
+        viewpager = view.findViewById(R.id.viewpager1);
     }
 
     private void initTab(){

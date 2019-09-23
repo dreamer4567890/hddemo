@@ -37,6 +37,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
     private LinearLayout llRetrofit;
     private LinearLayout llSql;
     private LinearLayout llContacts;
+    private LinearLayout llGreenDAO;
 
     @Override
     protected MinePresenter initPresenter(){
@@ -48,7 +49,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         return R.layout.fragment_mine;
     }
 
-    @Override
+    /*@Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView(view);
@@ -59,9 +60,9 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_mine,container,false);
         return view;
-    }
+    }*/
 
-    //@Override
+    @Override
     protected void initView(View view){
         ivHead = view.findViewById(R.id.iv_head);
         tvName = view.findViewById(R.id.tv_name);
@@ -70,6 +71,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llRetrofit = view.findViewById(R.id.ll_retrofit);
         llSql = view.findViewById(R.id.ll_sql);
         llContacts = view.findViewById(R.id.ll_contacts);
+        llGreenDAO = view.findViewById(R.id.ll_greendao);
         ivHead.setOnClickListener(this);
         tvName.setOnClickListener(this);
         llTask.setOnClickListener(this);
@@ -77,14 +79,16 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llRetrofit.setOnClickListener(this);
         llSql.setOnClickListener(this);
         llContacts.setOnClickListener(this);
+        llGreenDAO.setOnClickListener(this);
     }
 
-    //@Override
+    @Override
     protected void initData(){
-        SharedPreferences pref = getActivity().getSharedPreferences("data", MODE_PRIVATE);
-        if (!TextUtils.isEmpty(pref.getString("nickname",""))){
-            tvName.setText(pref.getString("nickname",""));
-        }
+        /*SharedPreferences pref = getActivity().getSharedPreferences("data", MODE_PRIVATE);
+        if (!TextUtils.isEmpty(pref.getString("nickname",null))){
+            tvName.setText(pref.getString("nickname",null));
+        }*/
+        tvName.setText(mPresenter.getMyInfo(getActivity()));
     }
 
     @Override
