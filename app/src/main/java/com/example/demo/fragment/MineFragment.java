@@ -16,6 +16,7 @@ import com.example.demo.R;
 import com.example.demo.activity.ContactsActivity;
 import com.example.demo.activity.EditPersonalDataActivity;
 import com.example.demo.activity.BatchDownloadActivity;
+import com.example.demo.activity.GreenDaoActivity;
 import com.example.demo.activity.RetrofitActivity;
 import com.example.demo.activity.SqlActivity;
 import com.example.demo.activity.TaskActivity;
@@ -119,6 +120,10 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
                 break;
             case R.id.ll_contacts:
                 intent = new Intent(getActivity(), ContactsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_greendao:
+                intent = new Intent(getActivity(), GreenDaoActivity.class);
                 startActivity(intent);
                 break;
             default:
