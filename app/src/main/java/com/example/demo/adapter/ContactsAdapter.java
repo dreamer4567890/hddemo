@@ -1,5 +1,7 @@
 package com.example.demo.adapter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +46,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                Toast.makeText(view.getContext(),mContactsList.get(position).getName(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(view.getContext(),mContactsList.get(position).getName(),Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + mContactsList.get(position).getPhone());
+                intent.setData(data);
+                view.getContext().startActivity(intent);
             }
         });
         return holder;
