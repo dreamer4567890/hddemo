@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--item布局，自定义View-->
+<com.example.textdemo.LeftSlideView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@android:color/white"
+    android:layout_marginBottom="1dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_set"
+            android:layout_height="106dp"
+            android:layout_width="80dp"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/layout_content"
+            android:text="设置"
+            android:textSize="25dp"
+            android:background="@drawable/orange_background"
+            android:textColor="#DDFFFFFF"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/tv_set"
+            android:text="删 除"
+            android:textSize="25dp"
+            android:background="@drawable/pink_background"
+            android:textColor="#DDFFFFFF"
+            />
+
+
+
+        <RelativeLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/text"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:textSize="50dp"
+                android:textColor="#dde65b05"
+                android:background="@drawable/white_background"
+                />
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+</com.example.textdemo.LeftSlideView>

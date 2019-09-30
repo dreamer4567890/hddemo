@@ -18,6 +18,7 @@ import com.example.demo.activity.EditPersonalDataActivity;
 import com.example.demo.activity.BatchDownloadActivity;
 import com.example.demo.activity.GreenDaoActivity;
 import com.example.demo.activity.RetrofitActivity;
+import com.example.demo.activity.SlideActivity;
 import com.example.demo.activity.SqlActivity;
 import com.example.demo.activity.TaskActivity;
 import com.example.demo.bean.Contacts;
@@ -39,6 +40,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
     private LinearLayout llSql;
     private LinearLayout llContacts;
     private LinearLayout llGreenDAO;
+    private LinearLayout llSlide;
 
     @Override
     protected MinePresenter initPresenter(){
@@ -73,6 +75,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llSql = view.findViewById(R.id.ll_sql);
         llContacts = view.findViewById(R.id.ll_contacts);
         llGreenDAO = view.findViewById(R.id.ll_greendao);
+        llSlide = view.findViewById(R.id.ll_slide);
         ivHead.setOnClickListener(this);
         tvName.setOnClickListener(this);
         llTask.setOnClickListener(this);
@@ -81,6 +84,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llSql.setOnClickListener(this);
         llContacts.setOnClickListener(this);
         llGreenDAO.setOnClickListener(this);
+        llSlide.setOnClickListener(this);
     }
 
     @Override
@@ -124,6 +128,10 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
                 break;
             case R.id.ll_greendao:
                 intent = new Intent(getActivity(), GreenDaoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_slide:
+                intent = new Intent(getActivity(), SlideActivity.class);
                 startActivity(intent);
                 break;
             default:

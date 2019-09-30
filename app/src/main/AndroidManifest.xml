@@ -29,6 +29,7 @@
         <activity android:name=".activity.SqlActivity"/>
         <activity android:name=".activity.ContactsActivity"/>
         <activity android:name=".activity.GreenDaoActivity"/>
+        <activity android:name=".activity.SlideActivity"/>
     </application>
 
 </manifest>
