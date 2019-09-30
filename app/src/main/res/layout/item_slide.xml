@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--item布局，自定义View-->
-<com.example.textdemo.LeftSlideView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.textdemo.LeftSlideView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="@android:color/white"
@@ -13,12 +14,12 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_set"
+            android:id="@+id/tv_add"
             android:layout_height="106dp"
             android:layout_width="80dp"
             android:gravity="center"
             android:layout_toRightOf="@+id/layout_content"
-            android:text="设置"
+            android:text="添 加"
             android:textSize="25dp"
             android:background="@drawable/orange_background"
             android:textColor="#DDFFFFFF"

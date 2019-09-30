@@ -18,11 +18,9 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
 
     private Context mContext;
 
-    private List<String> mDatas = new ArrayList<String>();
+    private List<String> mDatas = new ArrayList<>();
 
-    private IonSlidingViewClickListener mIDeleteBtnClickListener;
-
-    private IonSlidingViewClickListener mISetBtnClickListener;
+    private IonSlidingViewClickListener mIonSlidingViewClickListener;
 
     private LeftSlideView mMenu = null;
 
@@ -30,8 +28,7 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
     public SlideAdapter(Context context) {
 
         mContext = context;
-        mIDeleteBtnClickListener = (IonSlidingViewClickListener) context;
-        mISetBtnClickListener = (IonSlidingViewClickListener) context;
+        mIonSlidingViewClickListener = (IonSlidingViewClickListener) context;
 
         for (int i = 0; i < 10; i++) {
             mDatas.add(i + "");
@@ -43,6 +40,13 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
         return mDatas.size();
     }
 
+    public String getData(int position){
+        return mDatas.get(position);
+    }
+
+    public List<String> getmDatas(){
+        return mDatas;
+    }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
@@ -61,20 +65,20 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
                 if (menuIsOpen()) {
                     closeMenu();//关闭菜单
                 } else {
-                    int n = holder.getLayoutPosition();
-                    mIDeleteBtnClickListener.onItemClick(v, n);
+                    int n = holder.getAdapterPosition();
+                    mIonSlidingViewClickListener.onItemClick(v, n);
                 }
 
             }
         });
 
 
-        //左滑设置点击事件
-        holder.btn_Set.setOnClickListener(new View.OnClickListener() {
+        //左滑添加点击事件
+        holder.btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int n = holder.getLayoutPosition();
-                mISetBtnClickListener.onSetBtnCilck(view, n);
+                int n = holder.getAdapterPosition();
+                mIonSlidingViewClickListener.onSetAddClick(view, n);
             }
         });
 
@@ -83,8 +87,8 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
         holder.btn_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int n = holder.getLayoutPosition();
-                mIDeleteBtnClickListener.onDeleteBtnCilck(view, n);
+                int n = holder.getAdapterPosition();
+                mIonSlidingViewClickListener.onDeleteBtnClick(view, n);
             }
         });
 
@@ -105,7 +109,7 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView btn_Set;
+        public TextView btn_Add;
         public TextView btn_Delete;
         public TextView textView;
         public ViewGroup layout_content;
@@ -113,7 +117,7 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            btn_Set = (TextView) itemView.findViewById(R.id.tv_set);
+            btn_Add = (TextView) itemView.findViewById(R.id.tv_add);
             btn_Delete = (TextView) itemView.findViewById(R.id.tv_delete);
             textView = (TextView) itemView.findViewById(R.id.text);
             layout_content = (ViewGroup) itemView.findViewById(R.id.layout_content);
@@ -184,8 +188,8 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
     public interface IonSlidingViewClickListener {
         void onItemClick(View view, int position);//点击item正文
 
-        void onDeleteBtnCilck(View view, int position);//点击“删除”
+        void onDeleteBtnClick(View view, int position);//点击“删除”
 
-        void onSetBtnCilck(View view, int position);//点击“设置”
+        void onSetAddClick(View view, int position);//点击“设置”
     }
 }

@@ -30,48 +30,31 @@ public class SlideActivity extends BasePresenterActivity<SlidePresenter, IBaseVi
     @Override
     protected void initData(){
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
-        //设置布局管理器
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));//设置布局管理器
-        mRecyclerView.setAdapter(mAdapter = new SlideAdapter(this));//设置适配器
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter = new SlideAdapter(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置控制Item增删的动画
     }
 
-    /**
-     * item正文的点击事件
-     *
-     * @param view
-     * @param position
-     */
     @Override
     public void onItemClick(View view, int position) {
-        //点击item正文的代码逻辑
+        showToast(mAdapter.getData(position));
     }
 
 
-    /**
-     * item的左滑设置
-     *
-     * @param view
-     * @param position
-     */
     @Override
-    public void onSetBtnCilck(View view, int position) {
-
-        //“设置”点击事件的代码逻辑
-        Toast.makeText(SlideActivity.this, "请设置", Toast.LENGTH_LONG).show();
+    public void onSetAddClick(View view, int position) {
+        mPresenter.addItem(mAdapter,position + "");
+        if(mAdapter.getItemCount()>0){
+            showToast("成功添加第" + (position + 1) + "条数据");
+        }
     }
 
-
-    /**
-     * item的左滑删除
-     *
-     * @param view
-     * @param position
-     */
     @Override
-    public void onDeleteBtnCilck(View view, int position) {
-        mAdapter.removeData(position);
+    public void onDeleteBtnClick(View view, int position) {
+        mPresenter.deleteItem(mAdapter, position);
+        if(mAdapter.getItemCount()>0){
+            showToast("成功删除第" + (position + 1) + "条数据");
+        }
     }
 
 }

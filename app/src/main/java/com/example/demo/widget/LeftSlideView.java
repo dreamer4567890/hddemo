@@ -9,16 +9,13 @@ import android.widget.TextView;
 
 import com.example.demo.R;
 
-/**
- * 自定义View,继承水平滚动条
- */
 public class LeftSlideView extends HorizontalScrollView {
 
-    private TextView mTextView_Set;//设置按钮
+    private TextView mTextView_Add;
 
-    private TextView mTextView_Delete;//删除按钮
+    private TextView mTextView_Delete;
 
-    private int mScrollWidth;//记录滚动条可以滚动的距离
+    private int mScrollWidth;
 
     private Boolean once = false;//在onMeasure中只执行一次的判断
 
@@ -26,10 +23,6 @@ public class LeftSlideView extends HorizontalScrollView {
 
     private IonSlidingButtonListener mIonSlidingButtonListener;//自定义的接口，用于传达滑动事件等
 
-
-    /**
-     * 1.构造方法
-     */
     public LeftSlideView(Context context) {
         super(context, null);
     }
@@ -44,19 +37,19 @@ public class LeftSlideView extends HorizontalScrollView {
     }
 
 
-    //2.在onMeasure中先取得作为“设置”、“删除”按钮的TextView
+    //在onMeasure中先取得作为“设置”、“删除”按钮的TextView
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (!once) {
             mTextView_Delete = (TextView) findViewById(R.id.tv_delete);
-            mTextView_Set = (TextView) findViewById(R.id.tv_set);
+            mTextView_Add = (TextView) findViewById(R.id.tv_add);
             once = true;
         }
     }
 
 
-    //3.在onLayout中使Item在每次变更布局大小时回到初始位置，并且获取滚动条的可移动距离
+    //在onLayout中使Item在每次变更布局大小时回到初始位置，并且获取滚动条的可移动距离
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
@@ -64,12 +57,12 @@ public class LeftSlideView extends HorizontalScrollView {
             this.scrollTo(0, 0);
 
             //获取水平滚动条可以滑动的范围，即右侧“设置”、“删除”按钮的总宽度
-            mScrollWidth = mTextView_Delete.getWidth() + mTextView_Set.getWidth();
+            mScrollWidth = mTextView_Delete.getWidth() + mTextView_Add.getWidth();
         }
     }
 
 
-    //4.滑动监听，按滑动的距离大小控制菜单开关
+    //滑动监听，按滑动的距离大小控制菜单开关
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
@@ -88,25 +81,17 @@ public class LeftSlideView extends HorizontalScrollView {
         return super.onTouchEvent(ev);
     }
 
-
-    /**
-     * 5.
-     * @param l
-     * @param t
-     * @param oldl
-     * @param oldt
-     */
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
 
         //改变view的在x轴方向的位置
-        mTextView_Set.setTranslationX(1);
+        mTextView_Add.setTranslationX(1);
     }
 
 
     /**
-     * 6.按滚动条被拖动距离判断关闭或打开菜单
+     * 按滚动条被拖动距离判断关闭或打开菜单
      * getScrollX()                view的左上角相对于母视图的左上角的X轴偏移量
      * smoothScrollTo(x, y);        参数：相对于ScrollView左上角的位置来说，你要移动的位置
      */
@@ -122,7 +107,7 @@ public class LeftSlideView extends HorizontalScrollView {
     }
 
     /**
-     * 7.打开菜单
+     * 打开菜单
      */
     public void openMenu() {
         if (isOpen) {
@@ -134,7 +119,7 @@ public class LeftSlideView extends HorizontalScrollView {
     }
 
     /**
-     * 8.关闭菜单
+     * 关闭菜单
      */
     public void closeMenu() {
         if (!isOpen) {
@@ -146,7 +131,7 @@ public class LeftSlideView extends HorizontalScrollView {
 
 
     /**
-     * 9.接口定义及注册方法
+     * 接口定义及注册方法
      */
     public void setSlidingButtonListener(IonSlidingButtonListener listener) {
         mIonSlidingButtonListener = listener;
