@@ -126,16 +126,15 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.MyViewHolder
         }
     }
 
-
-    /**
-     * 删除item
-     * @param position
-     */
     public void removeData(int position) {
         mDatas.remove(position);
         notifyItemRemoved(position);
     }
 
+    public void addData(int position){
+        mDatas.add(position + "");
+        notifyItemChanged(position);
+    }
 
     /**
      * 删除菜单打开信息接收

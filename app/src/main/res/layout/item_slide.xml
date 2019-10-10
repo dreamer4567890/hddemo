@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--item布局，自定义View-->
-<com.example.textdemo.LeftSlideView
+<com.example.demo.widget.LeftSlideView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_width="80dp"
             android:gravity="center"
-            android:layout_toRightOf="@+id/tv_set"
+            android:layout_toRightOf="@+id/tv_add"
             android:text="删 除"
             android:textSize="25dp"
             android:background="@drawable/pink_background"
@@ -48,13 +48,14 @@
                 android:id="@+id/text"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:paddingLeft="20dp"
                 android:textSize="50dp"
                 android:textColor="#dde65b05"
                 android:background="@drawable/white_background"
-                />
+                android:gravity="center_vertical"/>
         </RelativeLayout>
 
 
 
     </RelativeLayout>
-</com.example.textdemo.LeftSlideView>
+</com.example.demo.widget.LeftSlideView>

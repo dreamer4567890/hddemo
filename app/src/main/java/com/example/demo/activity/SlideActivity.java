@@ -29,6 +29,7 @@ public class SlideActivity extends BasePresenterActivity<SlidePresenter, IBaseVi
 
     @Override
     protected void initData(){
+        setMyActionBar("SlideLayout",false);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter = new SlideAdapter(this));
@@ -43,7 +44,7 @@ public class SlideActivity extends BasePresenterActivity<SlidePresenter, IBaseVi
 
     @Override
     public void onSetAddClick(View view, int position) {
-        mPresenter.addItem(mAdapter,position + "");
+        mPresenter.addItem(mAdapter,position);
         if(mAdapter.getItemCount()>0){
             showToast("成功添加第" + (position + 1) + "条数据");
         }

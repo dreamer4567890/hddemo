@@ -10,8 +10,8 @@ import java.util.List;
 
 public class SlidePresenter extends BasePresenter<IBaseView> {
 
-    public void addItem(SlideAdapter mAdapter, String position){
-        mAdapter.getmDatas().add(position);
+    public void addItem(SlideAdapter mAdapter, int position){
+        mAdapter.addData(position);
     }
 
     public void deleteItem(SlideAdapter mAdapter, int position){
