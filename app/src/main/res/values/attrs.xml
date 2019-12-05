@@ -3,7 +3,15 @@
 
     <declare-styleable name="RoundImageView">
         <attr name="circle" format="boolean" />
-        <attr name="radius" format="dimension" />
+        <attr name="radius_view" format="dimension" />
     </declare-styleable>
-
+    <declare-styleable name="ArrowRectangleView">
+        <attr name="arrow_width" format="dimension" />
+        <attr name="arrow_height" format="dimension" />
+        <attr name="arrow_offset" format="dimension" />
+        <attr name="radius" format="dimension" />
+        <attr name="background_color" format="color" />
+        <attr name="shadow_color" format="color" />
+        <attr name="shadow_thickness" format="dimension" />
+    </declare-styleable>
 </resources>

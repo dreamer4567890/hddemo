@@ -13,10 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.demo.R;
+import com.example.demo.activity.ArrowActivity;
 import com.example.demo.activity.ContactsActivity;
 import com.example.demo.activity.EditPersonalDataActivity;
 import com.example.demo.activity.BatchDownloadActivity;
 import com.example.demo.activity.GreenDaoActivity;
+import com.example.demo.activity.RemoteControlActivity;
 import com.example.demo.activity.RetrofitActivity;
 import com.example.demo.activity.SlideActivity;
 import com.example.demo.activity.SqlActivity;
@@ -41,6 +43,8 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
     private LinearLayout llContacts;
     private LinearLayout llGreenDAO;
     private LinearLayout llSlide;
+    private LinearLayout llRemote;
+    private LinearLayout llArrow;
 
     @Override
     protected MinePresenter initPresenter(){
@@ -76,6 +80,9 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llContacts = view.findViewById(R.id.ll_contacts);
         llGreenDAO = view.findViewById(R.id.ll_greendao);
         llSlide = view.findViewById(R.id.ll_slide);
+        llRemote = view.findViewById(R.id.ll_remote);
+        llArrow = view.findViewById(R.id.ll_arrow_pop);
+
         ivHead.setOnClickListener(this);
         tvName.setOnClickListener(this);
         llTask.setOnClickListener(this);
@@ -85,6 +92,8 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llContacts.setOnClickListener(this);
         llGreenDAO.setOnClickListener(this);
         llSlide.setOnClickListener(this);
+        llRemote.setOnClickListener(this);
+        llArrow.setOnClickListener(this);
     }
 
     @Override
@@ -132,6 +141,14 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
                 break;
             case R.id.ll_slide:
                 intent = new Intent(getActivity(), SlideActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_remote:
+                intent = new Intent(getActivity(), RemoteControlActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_arrow_pop:
+                intent = new Intent(getActivity(), ArrowActivity.class);
                 startActivity(intent);
                 break;
             default:

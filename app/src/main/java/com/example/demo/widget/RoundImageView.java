@@ -35,7 +35,7 @@ public class RoundImageView extends AppCompatImageView {
     public RoundImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView);
-        mRadius = ta.getDimension(R.styleable.RoundImageView_radius, 0);
+        mRadius = ta.getDimension(R.styleable.RoundImageView_radius_view, 0);
         mIsCircle = ta.getBoolean(R.styleable.RoundImageView_circle, false);
         int srcResource = attrs.getAttributeResourceValue(
                 "http://schemas.android.com/apk/res/android", "src", 0);

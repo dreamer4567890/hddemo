@@ -30,6 +30,8 @@
         <activity android:name=".activity.ContactsActivity"/>
         <activity android:name=".activity.GreenDaoActivity"/>
         <activity android:name=".activity.SlideActivity"/>
+        <activity android:name=".activity.RemoteControlActivity"/>
+        <activity android:name=".activity.ArrowActivity"/>
     </application>
 
 </manifest>
