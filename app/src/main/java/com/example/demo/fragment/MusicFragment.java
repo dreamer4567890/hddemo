@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.example.demo.bean.Music;
 import com.example.demo.http.ExceptionHandle;
 import com.example.demo.presenter.MusicInfoPresenter;
 import com.example.demo.R;
+import com.example.demo.widget.DeviceCardAnimator;
+import com.example.demo.widget.ReduceAnimator;
 import com.example.demo.widget.RefreshLoadMoreRecycleView;
 
 import java.util.ArrayList;
@@ -81,20 +84,30 @@ public class MusicFragment extends BasePresenterFragment<MusicInfoPresenter,Musi
 
     @Override
     protected void initData(){
-        Music mike = new Music("Mike",wade);
-        Music john = new Music("John",wade);
-        Music jason = new Music("Jason",wade);
-        for(int i = 0;i < 5; i++){
+        Music mike = new Music("Mike",wade, Integer.parseInt("01"));
+        Music john = new Music("John",wade, Integer.parseInt("01"));
+        Music jason = new Music("Jason",wade, Integer.parseInt("01"));
+        Log.d("cgh", mike.toString());
+        for(int i = 0;i < 2; i++){
             mMusicList.add(mike);
             mMusicList.add(john);
             mMusicList.add(jason);
         }
         mPresenter.putMusicInfo(getContext(),mMusicList);
         musicAdapter = new MusicAdapter(mMusicList);
+        musicAdapter.setOnClickListener(new MusicAdapter.onClickListener() {
+            @Override
+            public void onClick(int position) {
+                musicAdapter.getmMusicList().remove(position);
+                musicAdapter.notifyItemRemoved(position);
+                musicAdapter.notifyItemRangeChanged(position, mMusicList.size() - position);
+            }
+        });
         recycleView.setAdapter(musicAdapter);
         recycleView.setListener(this);
         recycleView.setRefreshEnable(true);
         recycleView.setLoadMoreEnable(true);
+        recycleView.setItemAnimator(new DeviceCardAnimator());
     }
 
     @Override

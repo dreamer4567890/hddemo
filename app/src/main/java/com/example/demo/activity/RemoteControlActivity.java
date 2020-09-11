@@ -3,10 +3,11 @@ package com.example.demo.activity;
 
 import com.example.demo.R;
 import com.example.demo.widget.RemoteControl;
+import com.example.demo.widget.RemoteControl1;
 
 public class RemoteControlActivity extends BaseUiActivity {
 
-    private RemoteControl newRemoteControl;
+    private RemoteControl1 newRemoteControl;
 
     @Override
     protected int getLayoutId(){
