@@ -11,4 +11,9 @@
     <color name="mine_background_color">#F0F0F0</color>
     <color name="colorRed">#C0232F</color>
     <color name="colorGray">#D8D0D0</color>
+    <color name="color_CAA381">#CAA381</color>
+    <color name="color_FFEBD7">#FFEBD7</color>
+    <color name="common_text_white_gray">#7Fffffff</color>
+    <color name="alert_color">#f26161</color>
+    <color name="alert_color_alpha">#88f26161</color>
 </resources>

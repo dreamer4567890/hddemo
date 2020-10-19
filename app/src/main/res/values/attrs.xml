@@ -14,4 +14,12 @@
         <attr name="shadow_color" format="color" />
         <attr name="shadow_thickness" format="dimension" />
     </declare-styleable>
+    <!--渐变色TextView-->
+    <declare-styleable name="GradientTextView">
+        <attr name="isGradient" format="boolean" />
+        <attr name="startColor" format="color"/>
+        <attr name="endColor" format="color"/>
+        <attr name="defaultColor" format="color" />
+        <attr name="isChangePath" format="boolean" />
+    </declare-styleable>
 </resources>

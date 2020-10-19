@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.demo.R;
-import com.example.demo.Utils.ScreenUtil;
+import com.example.demo.utils.ScreenUtil;
 import com.example.demo.widget.LeftSlideView;
 
 import java.util.ArrayList;

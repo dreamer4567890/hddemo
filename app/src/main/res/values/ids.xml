@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="item_divider" type="id"/>
+    <item name="blur_dialog_bg" type="id"/>
+    <item name="support_item_drag" type="id"/>
+    <item name="support_item_swap" type="id"/>
+    <item type="id" name="bgaqrcode_camera_preview" />
+</resources>
