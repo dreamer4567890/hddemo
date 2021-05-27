@@ -1,5 +1,6 @@
 package com.example.demo.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.demo.R;
 import com.example.demo.activity.ArrowActivity;
 import com.example.demo.activity.ContactsActivity;
+import com.example.demo.activity.DiffActivity;
 import com.example.demo.activity.EditPersonalDataActivity;
 import com.example.demo.activity.BatchDownloadActivity;
 import com.example.demo.activity.GreenDaoActivity;
@@ -45,6 +47,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
     private LinearLayout llSlide;
     private LinearLayout llRemote;
     private LinearLayout llArrow;
+    private LinearLayout llDiff;
 
     @Override
     protected MinePresenter initPresenter(){
@@ -82,6 +85,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llSlide = view.findViewById(R.id.ll_slide);
         llRemote = view.findViewById(R.id.ll_remote);
         llArrow = view.findViewById(R.id.ll_arrow_pop);
+        llDiff = view.findViewById(R.id.ll_diff);
 
         ivHead.setOnClickListener(this);
         tvName.setOnClickListener(this);
@@ -94,6 +98,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llSlide.setOnClickListener(this);
         llRemote.setOnClickListener(this);
         llArrow.setOnClickListener(this);
+        llDiff.setOnClickListener(this);
     }
 
     @Override
@@ -105,6 +110,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         tvName.setText(mPresenter.getMyInfo(getActivity()));
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view){
         Intent intent = null;
@@ -149,6 +155,10 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
                 break;
             case R.id.ll_arrow_pop:
                 intent = new Intent(getActivity(), ArrowActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_diff:
+                intent = new Intent(getActivity(), DiffActivity.class);
                 startActivity(intent);
                 break;
             default:

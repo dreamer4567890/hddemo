@@ -68,6 +68,10 @@ public abstract class BaseUiActivity extends BaseActivity implements IBaseView {
         componentName = this.getComponentName();
     }
 
+    public void setMyActionBar(String strTitle) {
+        setMyActionBar(strTitle, false);
+    }
+
     public void setMyActionBar(String strTitle, boolean isSearch) {
         if (!TextUtils.isEmpty(strTitle)) {
             tvTitle.setText(strTitle);
