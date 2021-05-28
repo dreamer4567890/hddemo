@@ -34,6 +34,7 @@
         <activity android:name=".activity.RemoteControlActivity"/>
         <activity android:name=".activity.ArrowActivity"/>
         <activity android:name=".activity.DiffActivity"/>
+        <activity android:name=".activity.TestActivity"/>
         <activity
             android:name=".active.activity.LiveActivity"
             android:theme="@style/LiveStyle"
