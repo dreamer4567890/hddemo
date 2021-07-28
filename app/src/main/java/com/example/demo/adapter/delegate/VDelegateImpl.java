@@ -18,12 +18,12 @@ public class VDelegateImpl extends XItemViewDelegate<DiffBean> {
 
     @Override
     public boolean isForViewType(DiffBean item, int position) {
-        return item.getType() == VIEW_TYPE_V;
+        return item != null && item.getType() == VIEW_TYPE_V;
     }
 
     @Override
     public void convert(final ViewHolder holder, DiffBean diffBean, int position) {
-        if (diffBean==null){
+        if (diffBean == null) {
             return;
         }
         holder.setText(R.id.name, diffBean.getName());
@@ -35,5 +35,6 @@ public class VDelegateImpl extends XItemViewDelegate<DiffBean> {
                 holder.getView(R.id.point_item).performClick();
             }
         });
+
     }
 }

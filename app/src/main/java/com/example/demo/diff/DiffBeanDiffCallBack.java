@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.example.demo.bean.DiffBean;
 import com.example.demo.bean.DiffInfoBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DiffBeanDiffCallBack extends DiffUtil.ItemCallback<DiffBean> {
@@ -17,6 +18,10 @@ public class DiffBeanDiffCallBack extends DiffUtil.ItemCallback<DiffBean> {
     public static final int DIFF_TITLE = 3;
 
     private List<Integer> mChangeList;
+
+    public DiffBeanDiffCallBack() {
+        mChangeList = new ArrayList<>();
+    }
 
     /**
      * 判断两个条目是否是一致的
@@ -45,13 +50,13 @@ public class DiffBeanDiffCallBack extends DiffUtil.ItemCallback<DiffBean> {
     @Override
     public DiffInfoBean getChangePayload(@NonNull DiffBean oldItem, @NonNull DiffBean newItem) {
         mChangeList.clear();
-        if (TextUtils.equals(oldItem.getName(), newItem.getName())) {
+        if (!TextUtils.equals(oldItem.getName(), newItem.getName())) {
             mChangeList.add(DIFF_NAME);
         }
-        if (TextUtils.equals(oldItem.getValue(), newItem.getValue())) {
+        if (!TextUtils.equals(oldItem.getValue(), newItem.getValue())) {
             mChangeList.add(DIFF_VALUE);
         }
-        if (TextUtils.equals(oldItem.getTitle(), newItem.getTitle())) {
+        if (!TextUtils.equals(oldItem.getTitle(), newItem.getTitle())) {
             mChangeList.add(DIFF_TITLE);
         }
         if (mChangeList.size() == 1) {

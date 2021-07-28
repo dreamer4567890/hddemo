@@ -35,6 +35,9 @@
         <activity android:name=".activity.ArrowActivity"/>
         <activity android:name=".activity.DiffActivity"/>
         <activity android:name=".activity.TestActivity"/>
+        <activity android:name=".activity.TestLauncherActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".active.activity.LiveActivity"
             android:theme="@style/LiveStyle"

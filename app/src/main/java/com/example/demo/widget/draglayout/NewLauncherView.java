@@ -18,6 +18,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
@@ -33,17 +34,17 @@ import com.example.demo.widget.draglayout.viewanimator.AnimationListener;
 import com.example.demo.widget.draglayout.viewanimator.ViewAnimator;
 
 
-public class NewLauncherView<T> extends RelativeLayout {
+public class NewLauncherView extends RelativeLayout {
     private static final String TAG = NewLauncherView.class.getSimpleName();
 
 
-    public interface IDragActionCallback<T> {
+    public interface IDragActionCallback {
 
         void onDrop(View dragView, int startPosition, int lastPosition, int currentPosition, boolean out);
 
         boolean prepareInsert(int startPos, int targetPost);
 
-        void unPrepareInsert();
+        void unPrepareInsert(boolean isInsert);
 
         boolean onSwap(View dragView, int startPosition, int lastPosition, int currentPosition, boolean out);
 
@@ -77,7 +78,7 @@ public class NewLauncherView<T> extends RelativeLayout {
         mScreenHeight = outSize.y;
     }
 
-    private IDragActionCallback<T> mDragCallback;
+    private IDragActionCallback mDragCallback;
     // private int mStartDragPageIndex = -1;
     private RectF mDrawRegion = new RectF();
     private static final int DRAG_STATE_IDLE = 0;
@@ -89,7 +90,6 @@ public class NewLauncherView<T> extends RelativeLayout {
     private int mDragState = -1;
     private PointF mLastPoint = new PointF();
     private Bitmap mDragSnapShot;
-    private Bitmap mDragSnapShotEdge;
     private View mDragView;
     private RecyclerView mRecyclerView;
     //private ViewPager mViewPager;
@@ -120,7 +120,7 @@ public class NewLauncherView<T> extends RelativeLayout {
     private int mScreenWidth;
     private XNestedScrollView xNestedScrollView;
 
-    public void setDragPosition(IDragActionCallback<T> dragPosition) {
+    public void setDragListener(IDragActionCallback dragPosition) {
         mDragCallback = dragPosition;
     }
 
@@ -155,8 +155,6 @@ public class NewLauncherView<T> extends RelativeLayout {
             mDragSnapShot.recycle();
         }
 
-
-        mDragSnapShotEdge = Utils.getViewSnapshot(childView, 0xFF);
         mDragSnapShot = Utils.getViewSnapshot(childView, 0xFF, scale);
         mDrawRegionLeft = mLastX - childView.getWidth() / 2;
         mDrawRegionRight = mLastX + childView.getWidth() / 2;
@@ -174,7 +172,7 @@ public class NewLauncherView<T> extends RelativeLayout {
         this.mBottomOffset = bottomOffset;
     }
 
-    private void endDrag() {
+    public void endDrag() {
         resetHandler();
         if (mDoDropAnimation) {
             mDragState = DRAG_STATE_ANIMATION;
@@ -206,9 +204,9 @@ public class NewLauncherView<T> extends RelativeLayout {
 
             boolean canInsert = false;
 //            if (type == TYPE_HOME) {
-                Object[] values = findInsertOrSwapPosition(mLastX, mLastY);
-                tmp = (int) values[0];
-                canInsert = (boolean) values[1];
+            Object[] values = findInsertOrSwapPosition(mLastX, mLastY);
+            tmp = (int) values[0];
+            canInsert = (boolean) values[1];
 //            } else {
 //                tmp = findInsertPosition(mLastX, mLastY);
 //            }
@@ -344,9 +342,9 @@ public class NewLauncherView<T> extends RelativeLayout {
             int tmp;
             boolean canInsert = false;
 //            if (type == TYPE_HOME) {
-                Object[] values = findInsertOrSwapPosition(mLastX, mLastY);
-                tmp = (int) values[0];
-                canInsert = (boolean) values[1];
+            Object[] values = findInsertOrSwapPosition(mLastX, mLastY);
+            tmp = (int) values[0];
+            canInsert = (boolean) values[1];
 //            } else {
 //                tmp = findInsertPosition(mLastX, mLastY);
 //            }
@@ -354,7 +352,7 @@ public class NewLauncherView<T> extends RelativeLayout {
             if (!canInsert) {
                 mHandler.removeCallbacks(onInsert);
                 if (prepared) {
-                    mDragCallback.unPrepareInsert();
+                    mDragCallback.unPrepareInsert(false);
                     doPreparedAnimation(false);
                     mHandler.removeMessages(UPDATE_SWAP_FLAG);
                     prepared = false;
@@ -452,7 +450,7 @@ public class NewLauncherView<T> extends RelativeLayout {
             if (!inserted) {
                 swaped = mDragCallback.onSwap(mDragView, mItemStartPosition, mItemLastPosition, tmp, false);
             }
-            mDragCallback.unPrepareInsert();
+            mDragCallback.unPrepareInsert(inserted);
             prepared = false;
             if (swaped) {
                 mItemStartPosition = tmp;
@@ -516,7 +514,7 @@ public class NewLauncherView<T> extends RelativeLayout {
         this.packed = false;
         this.isIn = false;
         if (prepared) {
-            mDragCallback.unPrepareInsert();
+            mDragCallback.unPrepareInsert(false);
             prepared = false;
         }
         mHandler.removeMessages(UPDATE_SWAP_FLAG);
@@ -831,10 +829,8 @@ public class NewLauncherView<T> extends RelativeLayout {
         if (type == TYPE_HOME) {
             mDragSnapShot = Utils.getViewSnapshot(childView, 0xFF, scale);
         } else {
-//            mTopOffset = ScreenUtil.dip2px(getContext(), PACK_VIEW_TOP_OFFSET);//TODO:暂时这么写
             mDragSnapShot = Utils.getViewSnapshot(childView, 0xFF);
         }
-        mDragSnapShotEdge = Utils.getViewSnapshot(childView, 0xFF);
         int dGap = (fromType == FROMTYPE.FROM_HOME ? 100 : 0);
 
         mDrawRegionLeft = mLastX - childView.getWidth() / 2;
@@ -870,6 +866,11 @@ public class NewLauncherView<T> extends RelativeLayout {
             firstPos = glm.findFirstVisibleItemPosition();
             endPos = glm.findLastVisibleItemPosition();
             childViewCount = glm.getChildCount();
+        } else if (mRecyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+            LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+            firstPos = llm.findFirstVisibleItemPosition();
+            endPos = llm.findLastVisibleItemPosition();
+            childViewCount = llm.getChildCount();
         }
         return new int[]{firstPos, endPos, childViewCount};
     }
@@ -882,6 +883,9 @@ public class NewLauncherView<T> extends RelativeLayout {
         } else if (mRecyclerView.getLayoutManager() instanceof GridLayoutManager) {
             GridLayoutManager glm = (GridLayoutManager) mRecyclerView.getLayoutManager();
             childView = glm.findViewByPosition(pos);
+        } else if (mRecyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+            LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+            childView = llm.findViewByPosition(pos);
         }
         return childView;
     }

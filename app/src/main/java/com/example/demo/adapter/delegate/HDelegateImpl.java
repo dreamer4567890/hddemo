@@ -17,7 +17,7 @@ public class HDelegateImpl extends XItemViewDelegate<DiffBean> {
 
     @Override
     public boolean isForViewType(DiffBean item, int position) {
-        return item.getType() == VIEW_TYPE_H;
+        return item != null && item.getType() == VIEW_TYPE_H;
     }
 
     @Override
@@ -34,5 +34,6 @@ public class HDelegateImpl extends XItemViewDelegate<DiffBean> {
                 holder.getView(R.id.point_item).performClick();
             }
         });
+
     }
 }

@@ -4,6 +4,8 @@
     android:id="@+id/item"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:layout_marginBottom="12dp"
+    android:background="@color/color_CAA381"
     android:orientation="horizontal">
 
     <TextView

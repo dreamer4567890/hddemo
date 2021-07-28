@@ -1,5 +1,7 @@
 package com.example.demo.bean;
 
+import static com.example.demo.adapter.DiffAdapter.VIEW_TYPE_EMPTY;
+
 public class DiffBean {
 
     private int id;
@@ -54,5 +56,9 @@ public class DiffBean {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public boolean isEmpty() {
+        return type == VIEW_TYPE_EMPTY;
     }
 }

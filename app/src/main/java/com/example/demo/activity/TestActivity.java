@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestActivity extends BaseUiActivity {
-    private EditText editText;
     private RecyclerView mRecyclerView;
     private CommonAdapter<DiffBean> mAdapter;
 
@@ -29,9 +28,7 @@ public class TestActivity extends BaseUiActivity {
     @Override
     protected void initData() {
         super.initData();
-        editText = findViewById(R.id.edit_text);
         mRecyclerView = findViewById(R.id.recyclerView);
-        editText.setOnFocusChangeListener(inputCharacterLengthListener("三点几，饮茶先啦"));
         mAdapter = new CommonAdapter<DiffBean>(this, R.layout.h_item) {
             @Override
             protected void convert(ViewHolder holder, DiffBean diffBean, int position) {
@@ -50,7 +47,7 @@ public class TestActivity extends BaseUiActivity {
 
     private void setData() {
         List<DiffBean> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 50; i++) {
             list.add(new DiffBean(i, i + "", i + "", i + "",
                     i < 5 ? DiffAdapter.VIEW_TYPE_H : DiffAdapter.VIEW_TYPE_V));
         }

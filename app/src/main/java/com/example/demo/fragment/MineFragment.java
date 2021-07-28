@@ -26,6 +26,7 @@ import com.example.demo.activity.SlideActivity;
 import com.example.demo.activity.SqlActivity;
 import com.example.demo.activity.TaskActivity;
 import com.example.demo.activity.TestActivity;
+import com.example.demo.activity.TestLauncherActivity;
 import com.example.demo.bean.Contacts;
 import com.example.demo.mvp.IBaseView;
 import com.example.demo.presenter.MinePresenter;
@@ -50,6 +51,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
     private LinearLayout llArrow;
     private LinearLayout llDiff;
     private LinearLayout llTest;
+    private LinearLayout llTestLauncher;
 
     @Override
     protected MinePresenter initPresenter(){
@@ -89,6 +91,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llArrow = view.findViewById(R.id.ll_arrow_pop);
         llDiff = view.findViewById(R.id.ll_diff);
         llTest= view.findViewById(R.id.ll_test);
+        llTestLauncher= view.findViewById(R.id.ll_test_launcher);
 
         ivHead.setOnClickListener(this);
         tvName.setOnClickListener(this);
@@ -103,6 +106,7 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
         llArrow.setOnClickListener(this);
         llDiff.setOnClickListener(this);
         llTest.setOnClickListener(this);
+        llTestLauncher.setOnClickListener(this);
     }
 
     @Override
@@ -167,6 +171,10 @@ public class MineFragment extends BasePresenterFragment<MinePresenter, IBaseView
                 break;
             case R.id.ll_test:
                 intent = new Intent(getActivity(), TestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_test_launcher:
+                intent = new Intent(getActivity(), TestLauncherActivity.class);
                 startActivity(intent);
                 break;
             default:
